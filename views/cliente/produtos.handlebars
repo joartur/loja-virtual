@@ -1,0 +1,12 @@
+<h1>Produtos Disponíveis</h1>
+<ul>
+  {{#each produtos}}
+    <li>{{this.nome}} - R$ {{this.preco}}
+      <form action="/cliente/carrinho" method="POST">
+        <input type="hidden" name="produtoId" value="{{this.id}}">
+        <input type="number" name="quantidade" placeholder="Quantidade" min="1" max="{{this.quantidade}}">
+        <button type="submit">Adicionar ao Carrinho</button>
+      </form>
+    </li>
+  {{/each}}
+</ul>

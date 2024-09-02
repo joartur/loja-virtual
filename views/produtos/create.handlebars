@@ -1,0 +1,22 @@
+<div class="tought-form-container">
+    <a href="/produtos/dashboard"> Voltar </a>
+    <h1>Adicionar um produto:</h1>
+
+    <form action="/produtos/add" method="POST" id="toughtForm">
+        <div class="form-control">
+            <label for="title">Produto:</label>
+            <input type="text" name="title" 
+            placeholder="Digite o nome do produto...">
+            <input type="submit" value="Adicionar Produto">
+        </div>
+    </form>
+</div>
+
+{{!-- <script>
+    document.getElementById('toughtForm').addEventListener('submit', function(event) {
+            const confirmed = confirm('Você realmente deseja criar este pensamento?');
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        });
+</script> --}}

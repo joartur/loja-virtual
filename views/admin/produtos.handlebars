@@ -1,0 +1,13 @@
+<h1>Administração de Produtos</h1>
+<ul>
+  {{#each produtos}}
+    <li>{{this.nome}} - R$ {{this.preco}}</li>
+  {{/each}}
+</ul>
+<form action="/admin/produtos" method="POST">
+  <input type="text" name="nome" placeholder="Nome do Produto">
+  <input type="text" name="descricao" placeholder="Descrição">
+  <input type="number" name="preco" placeholder="Preço">
+  <input type="number" name="quantidade" placeholder="Quantidade">
+  <button type="submit">Cadastrar</button>
+</form>
