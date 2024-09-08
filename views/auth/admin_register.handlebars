@@ -1,0 +1,64 @@
+<div class="auth-container">
+    <h2>Criar Administrador</h2>
+    <form id="adminRegisterForm" action="/admin/register" method="POST">
+        <div class="form-control">
+            <label for="name">Nome:</label>
+            <input id="name" type="text" name="name" placeholder="Digite o nome do administrador" required>
+            <span id="nameError" class="error"></span>
+        </div>
+        <div class="form-control">
+            <label for="email">Email:</label>
+            <input type="email" name="email" placeholder="Digite o email do administrador" required>
+            <span id="emailError" class="error"></span>
+        </div>
+        <div class="form-control">
+            <label for="password">Senha:</label>
+            <input id="password" type="password" name="password" placeholder="Digite a senha" required>
+            <span id="passwordError" class="error"></span>
+        </div>
+        <div class="form-control">
+            <label for="confirmpassword">Confirmação de Senha:</label>
+            <input id="confirmpassword" type="password" name="confirmpassword" placeholder="Confirme a senha" required>
+            <span id="confirmpasswordError" class="error"></span>
+        </div>
+        <input type="submit" value="Cadastrar Administrador">
+        <p>Voltar para o <a href="/produtos/admin/dashboard">Dashboard</a></p>
+    </form>
+</div>
+
+<script>
+    const adminRegisterForm = document.getElementById('adminRegisterForm');
+    adminRegisterForm.addEventListener('submit', function(event){
+
+        // Validação do nome
+        const name = document.getElementById('name').value;
+        if(name.length <= 3){
+            document.getElementById('nameError').textContent = "O Nome deve ter mais que 3 letras";
+            event.preventDefault();
+        }
+
+        // Validação do email
+        const email = document.querySelector('input[name="email"]').value;
+        if(!email.includes('@')){
+            document.getElementById('emailError').textContent = "Digite um email válido";
+            event.preventDefault();
+        }
+
+        // Validação da senha
+        const password = document.getElementById('password').value;
+        if(password.length <= 8){
+            document.getElementById('passwordError').textContent = "A Senha deve conter mais que 8 caracteres";
+            event.preventDefault();
+        }
+
+        const confirmPassword = document.getElementById('confirmpassword').value;
+        if(password !== confirmPassword){
+            document.getElementById('confirmpasswordError').textContent = "As Senhas não coincidem";
+            event.preventDefault();
+        }
+
+        if(!confirm('Você realmente deseja criar um novo administrador?')){
+            event.preventDefault();
+        }
+    });
+</script>

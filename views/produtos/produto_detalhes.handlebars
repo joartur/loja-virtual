@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .product-details {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .product-details img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Detalhes do Produto</h1>
+    </header>
+
+<main>
+    <div class="product-details">
+        <h2>{{produto.name}}</h2>
+        {{#if produto.image}}
+            <img src="{{produto.image}}" alt="{{produto.name}}">
+        {{else}}
+            <p>Imagem não disponível</p>
+        {{/if}}            
+        <p><strong>Marca:</strong> {{produto.marca}}</p>
+        <p><strong>Descrição:</strong> {{produto.description}}</p>
+        <p><strong>Preço:</strong> R$ {{produto.price}}</p>
+        <p><strong>Quantidade:</strong> {{produto.quant}}</p>
+        <p><strong>Categoria:</strong> {{produto.category}}</p>
+
+        <form action="/carrinho/add/{{produto.id}}" method="POST">
+            <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+        </form>
+
+    </div>
+</main>
+</body>
+</html>

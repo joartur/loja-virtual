@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .product-image {
+            width: 100px; /* Ajuste o tamanho conforme necessário */
+            height: auto;
+        }
+        .btn-delete {
+            color: red;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meu Carrinho</h1>
+    </header>
+
+<main>
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+          {{#each carrinho}}
+          <tr>
+            <td>
+              {{#if this.Produto.image}}
+                <img src="{{this.Produto.image}}" alt="{{this.Produto.name}}" class="product-image">
+              {{else}}
+                Imagem não disponível
+              {{/if}}
+              <a href="/produtos/produto/detalhes/{{this.Produto.id}}">{{this.Produto.name}}</a>
+              
+            </td>
+            <td>R$ {{this.Produto.priceFormatted}}</td>
+            <td>{{this.quantity}}</td>
+            <td>
+              <!-- Link para visualizar detalhes do produto -->
+              <a href="/produtos/produto/detalhes/{{this.Produto.id}}">Ver Detalhes</a>
+              
+              <!-- Ícone de excluir item -->
+              <form action="/carrinho/remover/{{this.Produto.id}}" method="POST" style="display: inline;">
+                <button type="submit" class="btn-delete">Excluir</button>
+              </form>     
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+    </table>
+
+    <p>Total: R$ {{total}}</p>
+</main>
+</body>
+</html>

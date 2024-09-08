@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .products-grid li {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .products-grid h3 {
+            margin-top: 0;
+        }
+
+        .products-grid p {
+            margin: 8px 0;
+        }
+
+        .products-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .btn-edit {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }  
+        .btn-delete {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #b30000;
+        }
+        #confirmacaoMsg {
+            background-color: #f8d7da;
+            padding: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        .btn-confirm {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }                
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Área Administrativa</h1>
+    </header>
+
+    <main>
+        {{#if emptyProdutos}}
+            <p>Nenhum produto foi adicionado ainda.</p>
+        {{else}}
+            <ul class="products-grid">
+                {{#each produtos}}
+                    <li>
+                        <h3>{{this.name}}</h3>
+                        {{#if this.image}}
+                            <img src="{{this.image}}" alt="{{this.name}}">
+                        {{else}}
+                            <p>Imagem não disponível</p>
+                        {{/if}}       
+                        <p>Preço: R$ {{this.price}}</p>            
+                        <p>{{truncate this.description 100}}</p>                      
+                        <!-- Botão de Editar -->
+                        <a href="/produtos/edit/{{this.id}}" class="btn-edit">Editar</a>
+                        <div class="produto" id="produto-{{this.id}}">
+                            <form action="/admin/produto/{{this.id}}/delete" method="POST" class="delete-form">
+                                <button type="button" class="btn-delete" onclick="confirmarExclusao(this)">Excluir</button>
+                                <div class="confirmacao-msg" style="display: none; margin-top: 10px;">
+                                    <p>Tem certeza que deseja excluir este produto?</p>
+                                    <button type="submit" class="btn-confirm">Sim</button>
+                                    <button type="button" class="btn-cancel" onclick="cancelarExclusao(this)">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>             
+                    </li>
+                {{/each}}
+            </ul>
+        {{/if}}
+    </main>
+</body>
+<script>
+function confirmarExclusao(button) {
+    // Fecha todas as mensagens de confirmação abertas
+    const todasConfirmacoes = document.querySelectorAll('.confirmacao-msg');
+    todasConfirmacoes.forEach(function(confirmacao) {
+        confirmacao.style.display = 'none';
+        const btnDelete = confirmacao.closest('.delete-form').querySelector('.btn-delete');
+        btnDelete.style.display = 'inline-block'; // Reexibe o botão de exclusão original
+    });
+
+    // Encontra o elemento pai mais próximo (formulário) e exibe a mensagem de confirmação
+    const form = button.closest('.delete-form');
+    const confirmacaoMsg = form.querySelector('.confirmacao-msg');
+
+    // Exibe a mensagem de confirmação
+    confirmacaoMsg.style.display = 'block';
+
+    // Oculta o botão de exclusão original
+    button.style.display = 'none';
+}
+
+function cancelarExclusao(button) {
+    // Encontra o elemento pai mais próximo (formulário) e esconde a mensagem de confirmação
+    const form = button.closest('.delete-form');
+    const confirmacaoMsg = form.querySelector('.confirmacao-msg');
+
+    // Oculta a mensagem de confirmação
+    confirmacaoMsg.style.display = 'none';
+
+    // Reexibe o botão de exclusão original
+    form.querySelector('.btn-delete').style.display = 'inline-block';
+}
+</script>
+</html>

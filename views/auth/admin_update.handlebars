@@ -1,0 +1,25 @@
+<div class="auth-container">
+    <h2>Editar Dados do Administrador</h2>
+    <form id="adminUpdateForm" action="/admin/update" method="POST">
+        <div class="form-control">
+            <label for="name">Nome:</label>
+            <input id="name" type="text" name="name" value="{{admin.name}}" placeholder="Digite o nome do administrador" required>
+        </div>
+        <div class="form-control">
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" value="{{admin.email}}" placeholder="Digite o email do administrador" required>
+        </div>
+        <div class="form-control">
+            <label for="password">Nova Senha (deixe em branco para não alterar):</label>
+            <input id="password" type="password" name="password" placeholder="Digite uma nova senha">
+        </div>
+        <div class="form-control">
+            <label for="role">Função:</label>
+            <select id="role" name="role">
+                <option value="admin" {{#if (eq admin.role 'admin')}}selected{{/if}}>Administrador</option>
+                <option value="cliente" {{#if (eq admin.role 'cliente')}}selected{{/if}}>Cliente</option>
+            </select>
+        </div>
+        <input type="submit" value="Atualizar">
+    </form>
+</div>

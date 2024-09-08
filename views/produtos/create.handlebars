@@ -1,0 +1,47 @@
+<div class="tought-form-container">
+    <a href="/produtos/dashboard"> Voltar </a>
+    <h1>Adicionar Produto:</h1>
+
+    <form action="/produtos/add" method="POST" id="toughtForm">
+        <div class="form-control">
+            <label for="name">Nome do Produto:</label>
+            <input type="text" name="name" placeholder="Digite o nome do produto" required>
+        </div>
+        <div class="form-control">
+            <label for="marca">Marca:</label>
+            <input type="text" name="marca" placeholder="Digite a marca" required>
+        </div>
+        <div class="form-control">
+            <label for="description">Descrição:</label>
+            <textarea name="description" placeholder="Digite a descrição" required></textarea>
+        </div>
+        <div class="form-control">
+            <label for="price">Preço:</label>
+            <input type="number" name="price" step="0.01" placeholder="Digite o preço" required>
+        </div>
+        <div class="form-control">
+            <label for="image">Imagem (URL):</label>
+            <input type="text" name="image" placeholder="Digite a URL da imagem">
+        </div>
+        <div class="form-control">
+            <label for="quant">Quantidade:</label>
+            <input type="number" name="quant" placeholder="Digite a quantidade" required>
+        </div>
+        <div class="form-control">
+            <label for="category">Categoria:</label>
+            <input type="text" name="category" placeholder="Digite a categoria" required>
+        </div>
+        <div class="form-control">
+            <input type="submit" value="Criar Produto">
+        </div>
+    </form>
+</div>
+
+{{!-- <script>
+    document.getElementById('toughtForm').addEventListener('submit', function(event) {
+            const confirmed = confirm('Você realmente deseja criar este pensamento?');
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        });
+</script> --}}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav id="navbar">
+        <a href="/" id="logo">
+            <a href="/"><img src="/img/img.png" alt="Lojas Ame"></a>
+        </a>
+
+    <div class="search-header">
+        <form action="/" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="busque aqui seu produto" class="search-input">
+            <button type="submit" class="search-button"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+       <ul>            
+            {{#if session.userid}}
+                {{#if (eq session.userRole 'admin')}}
+                    <!-- Menu do administrador -->
+                    <li><a href="/produtos/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/produtos/add">Adicionar Produto</a></li>
+                    <li><a href="/admin/update">Editar Dados</a></li>
+                    <li><a href="/admin/register">Criar Administrador</a></li>
+                    <li><a href="/logout">Sair</a></li>                
+                {{else}}
+                    <!-- Menu do cliente -->
+                    <li><a href="/">Produtos</a></li> 
+                    <li><a href="/carrinho">Meu Carrinho</a></li> 
+                    <li><a href="/produtos/cliente_update">Editar Dados</a></li>
+                    <li><a href="/logout">Sair</a></li>
+                {{/if}}
+            {{else}}
+                <!-- Menu do visitante -->
+                <li class="login-item">
+                    <i class="bi bi-person-circle"></i>
+                    <div class="login-text">
+                        <a href="/login">olá, faça seu login</a>
+                        <a href="/register">ou cadastre-se<i class="bi bi-chevron-down"></i></a>
+                    </div>
+                </li>
+                <li><a href="/"><i class="bi bi-shop"></i></a></li>
+                <li><a href="/"><i class="bi bi-heart"></i></a></li>
+                <li><a href="/"><i class="bi bi-basket"></i></a></li>      
+            {{/if}}
+        </ul>
+    </nav>
+<main id="main">
+    <ul>
+        <li class="geo"><i class="bi bi-geo-alt"></i>informe seu CEP</li>
+    </ul>
+    <ul>
+        <li><a href="/">baixe o app</a></li>
+        <li><a href="/">para sua empresa</a></li>
+        <li><a href="/">entrega rápida</a></li>
+        <li><a href="/">serviços</a></li>
+        <li><a href="/">nossas lojas</a></li>
+        <li><a href="/">oba, cupom</a></li>
+        <li><a href="/">lojas oficiais</a></li>
+        <li><a href="/">produtos internacionais</a></li>
+        <li><a href="/">oferta do dia</a></li>
+    </ul>
+</main>
+<div class="menu">
+    <ul>
+        <li class="dept"><i class="bi bi-list"></i>Todos os departamentos<i class="bi bi-chevron-down"></i></li>
+    </ul>
+    <ul>
+        <li><a href="/">baixe o app</a></li>
+        <li><a href="/">para sua empresa</a></li>
+        <li><a href="/">entrega rápida</a></li>
+        <li><a href="/">serviços</a></li>
+        <li><a href="/">nossas lojas</a></li>
+        <li><a href="/">oba, cupom</a></li>
+        <li><a href="/">lojas oficiais</a></li>
+        <li><a href="/">produtos internacionais</a></li>
+        <li><a href="/">oferta do dia</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        {{#if session.userid}}
+            {{#if (eq session.userRole 'admin')}}
+                <!-- Informações do administrador e menu do administrador -->
+                <div class="admin-info">
+                    <h3>Administrador</h3>
+                    <p><strong>Nome:</strong> {{user.name}}</p>
+                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Função:</strong> Administrador</p>
+                </div>
+                <ul>
+                    <li><a href="/produtos/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/produtos/add">Adicionar Produto</a></li>
+                    <li><a href="/admin/update/{{user.id}}">Editar Dados</a></li>
+                    <li><a href="/admin/register">Criar Administrador</a></li>
+                    <li><a href="/logout">Sair</a></li>
+                </ul>
+            {{else}}
+                <!-- Informações do cliente e menu do cliente -->
+                <div class="admin-info">
+                    <h3>Cliente</h3>
+                    <p><strong>Nome:</strong> {{user.name}}</p>
+                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Função:</strong> Cliente</p>
+                </div>
+                <ul>
+                    <li><a href="/">Produtos</a></li>
+                    <li><a href="/carrinho">Meu Carrinho</a></li>
+                    <li><a href="/logout">Sair</a></li>
+                </ul>
+            {{/if}}
+        {{else}}
+            <!-- Menu do visitante -->
+            <ul>
+                <li class="login-item">
+                    <i class="bi bi-person-circle"></i>
+                    <div class="login-text">
+                        <a href="/login">Olá, faça seu login</a>
+                        <a href="/register">ou cadastre-se<i class="bi bi-chevron-down"></i></a>
+                    </div>
+                </li>
+                <li><a href="/"><i class="bi bi-shop"></i></a></li>
+                <li><a href="/"><i class="bi bi-heart"></i></a></li>
+                <li><a href="/"><i class="bi bi-basket"></i></a></li>
+            </ul>
+        {{/if}}
+    </div>
+    <div class="content">
+        <!-- Conteúdo principal -->
+        {{#if messages.message}}
+        <div class="message">
+            {{messages.message}}
+        </div>
+        {{/if}}
+        {{{body}}}
+    </div>
+</div>
+
+<footer>
+    <p>
+        <span> Loja Virtual </span>
+        &copy; 2024
+    </p>
+</footer>
+</body>
+
+</html>
