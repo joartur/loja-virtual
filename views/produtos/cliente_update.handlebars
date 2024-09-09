@@ -1,28 +1,31 @@
-<h1>Editar Dados do Cliente</h1>
-
 {{#if messages.message}}
 <div class="message">
     {{messages.message}}
 </div>
 {{/if}}
 
-<form action="/produtos/cliente_update" method="post">
-    <input type="hidden" name="id" value="{{user.id}}">
-    <div class="form-group">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" value="{{user.name}}" required>
-    </div>
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{user.email}}" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password">
-    </div>
-    <div class="form-group">
-        <label for="confirmpassword">Confirmar Senha:</label>
-        <input type="password" id="confirmpassword" name="confirmpassword">
-    </div>
-    <button type="submit">Atualizar</button>
-</form>
+<div class="tought-form-container">
+    <h1>Alterar seus Dados</h1>
+    <form action="/produtos/cliente_update" method="post">
+        <input type="hidden" name="id" value="{{user.id}}">
+        <div class="form-control">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" value="{{user.name}}" required>
+        </div>
+        <div class="form-control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email}}" required>
+        </div>
+        <div class="form-control">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="form-control">
+            <label for="confirmpassword">Confirmar Senha:</label>
+            <input type="password" id="confirmpassword" name="confirmpassword">
+        </div>
+        <div class="form-control">
+            <button type="submit" class="btn">Atualizar</button>
+        </div>
+    </form>
+</div>

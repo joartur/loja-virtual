@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
 
 class AuthController {
     static login(req, res) {
@@ -8,41 +9,55 @@ class AuthController {
 
     static async loginPost(req, res) {
         const { email, password } = req.body;
-    
-        // Procura o usuário no banco de dados
-        const user = await User.findOne({ where: { email } });
-        
-        // Verifica se o usuário existe
-        if (!user) {
-            req.flash('message', 'Usuário não encontrado!');
-            res.render('auth/login');
-            return;
-        }
-    
-        // Verifica se a senha está correta
-        const passwordMatch = bcrypt.compareSync(password, user.password);
-        if (!passwordMatch) {
-            req.flash('message', 'Senha inválida!');
-            res.render('auth/login');
-            return;
-        }
-    
-        // Define a sessão do usuário
-        req.session.userid = user.id;
-        req.session.userRole = user.role; // Armazena o papel do usuário na sessão
-    
-        req.flash('message', 'Login realizado com sucesso!');
-        
-        // Salva a sessão e redireciona com base no papel do usuário
-        req.session.save(() => {
-            if (user.role === 'admin') {
-                res.redirect('/produtos/admin/dashboard');  // Dashboard para administradores
-            } else {
-                res.redirect('/');  // Dashboard para clientes
-            }
-        });
-    }
 
+        // Verifica se há erros de validação (se estiver usando express-validator)
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('message', 'Por favor, corrija os erros!');
+            return res.render('auth/login', { errors: errors.array() });
+        }
+
+        try {
+            // Procura o usuário no banco de dados
+            const user = await User.findOne({ where: { email } });
+
+            // Verifica se o usuário existe
+            if (!user) {
+                req.flash('message', 'Usuário não encontrado!');
+                return res.render('auth/login');
+            }
+
+            // Verifica se a senha está correta
+            const passwordMatch = bcrypt.compareSync(password, user.password);
+            if (!passwordMatch) {
+                req.flash('message', 'Senha inválida!');
+                return res.render('auth/login');
+            }
+
+            // Atualiza a data e hora do último login
+            user.lastLogin = new Date();
+            await user.save();
+
+            // Define a sessão do usuário
+            req.session.userid = user.id;
+            req.session.userRole = user.role; // Armazena o papel do usuário na sessão
+
+            req.flash('message', 'Login realizado com sucesso!');
+
+            // Salva a sessão e redireciona com base no papel do usuário
+            req.session.save(() => {
+                if (user.role === 'admin') {
+                    res.redirect('/produtos/admin/dashboard');  // Dashboard para administradores
+                } else {
+                    res.redirect('/');  // Dashboard para clientes
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            req.flash('message', 'Erro ao realizar o login. Tente novamente.');
+            res.render('auth/login');
+        }
+    }
 
     static register(req, res) {
         res.render('auth/register');

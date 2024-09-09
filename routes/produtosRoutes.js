@@ -12,6 +12,8 @@ router.get('/add', checkAdmin, ProdutoController.createProduto);
 router.post('/add', checkAdmin, ProdutoController.createProdutoSave);
 router.get('/edit/:id', checkAdmin, ProdutoController.updateProduto);
 router.post('/edit', checkAdmin, ProdutoController.updateProdutoSave);
+router.get('/produtos/filtro', ProdutoController.filtroProdutos);
+
 router.post('/remove', checkAdmin, ProdutoController.removeProduto);
 
 module.exports = router;

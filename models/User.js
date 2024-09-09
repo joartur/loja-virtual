@@ -20,6 +20,10 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('admin', 'cliente'),
         allowNull: false,
         defaultValue: 'cliente'
+    },
+    lastLogin: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 }, {
     tableName: 'Users',

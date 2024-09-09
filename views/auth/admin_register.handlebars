@@ -1,5 +1,5 @@
-<div class="auth-container">
-    <h2>Criar Administrador</h2>
+<div class="tought-form-container">
+    <h1>Criar Administrador</h1>
     <form id="adminRegisterForm" action="/admin/register" method="POST">
         <div class="form-control">
             <label for="name">Nome:</label>
@@ -21,8 +21,10 @@
             <input id="confirmpassword" type="password" name="confirmpassword" placeholder="Confirme a senha" required>
             <span id="confirmpasswordError" class="error"></span>
         </div>
-        <input type="submit" value="Cadastrar Administrador">
-        <p>Voltar para o <a href="/produtos/admin/dashboard">Dashboard</a></p>
+        <div class="form-control">
+            <input type="submit" value="Cadastrar Administrador">
+            <p>Voltar para o <a href="/produtos/admin/dashboard">Dashboard</a></p>
+        </div>
     </form>
 </div>
 

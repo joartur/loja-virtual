@@ -23,17 +23,17 @@
             {{#if session.userid}}
                 {{#if (eq session.userRole 'admin')}}
                     <!-- Menu do administrador -->
-                    <li><a href="/produtos/admin/dashboard">Dashboard</a></li>
-                    <li><a href="/produtos/add">Adicionar Produto</a></li>
-                    <li><a href="/admin/update">Editar Dados</a></li>
-                    <li><a href="/admin/register">Criar Administrador</a></li>
-                    <li><a href="/logout">Sair</a></li>                
+                    <li><a href="/produtos/admin/dashboard"><i class="bi bi-shop" title="Dashboard"></i></a></li>
+                    <li><a href="/produtos/add"><i class="bi bi-bag-plus" title="Adicionar Produto"></i></a></li>
+                    <li><a href="/admin/update"><i class="bi bi-pencil-square" title="Editar Dados"></i></a></li>
+                    <li><a href="/admin/register"><i class="bi bi-person-add" title="Criar Administrador"></i></a></li>
+                    <li><a href="/logout"><i class="bi bi-door-closed" title="Sair"></i></a></li>                
                 {{else}}
                     <!-- Menu do cliente -->
-                    <li><a href="/">Produtos</a></li> 
-                    <li><a href="/carrinho">Meu Carrinho</a></li> 
-                    <li><a href="/produtos/cliente_update">Editar Dados</a></li>
-                    <li><a href="/logout">Sair</a></li>
+                    <li><a href="/"><i class="bi bi-shop" title="Produtos"></i></a></li> 
+                    <li><a href="/carrinho"><i class="bi bi-basket" title="Meu Carrinho"></i></a></li> 
+                    <li><a href="/produtos/cliente_update"><i class="bi bi-pencil-square" title="Editar Dados"></i></a></li>
+                    <li><a href="/logout"><i class="bi bi-door-closed" title="Sair"></i></a></li>
                 {{/if}}
             {{else}}
                 <!-- Menu do visitante -->
@@ -92,42 +92,31 @@
                     <h3>Administrador</h3>
                     <p><strong>Nome:</strong> {{user.name}}</p>
                     <p><strong>Email:</strong> {{user.email}}</p>
-                    <p><strong>Função:</strong> Administrador</p>
+                    <p><strong>Criado em:</strong> {{formatDate user.createdAt}}</p>
+                    <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
                 </div>
-                <ul>
-                    <li><a href="/produtos/admin/dashboard">Dashboard</a></li>
-                    <li><a href="/produtos/add">Adicionar Produto</a></li>
-                    <li><a href="/admin/update/{{user.id}}">Editar Dados</a></li>
-                    <li><a href="/admin/register">Criar Administrador</a></li>
-                    <li><a href="/logout">Sair</a></li>
-                </ul>
             {{else}}
                 <!-- Informações do cliente e menu do cliente -->
                 <div class="admin-info">
-                    <h3>Cliente</h3>
-                    <p><strong>Nome:</strong> {{user.name}}</p>
+                    <p><strong>Cliente:</strong> {{user.name}}</p>
                     <p><strong>Email:</strong> {{user.email}}</p>
-                    <p><strong>Função:</strong> Cliente</p>
+                    <p><strong>Cliente desde:</strong> {{formatDate user.createdAt}}</p>
+                    <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
                 </div>
-                <ul>
-                    <li><a href="/">Produtos</a></li>
-                    <li><a href="/carrinho">Meu Carrinho</a></li>
-                    <li><a href="/logout">Sair</a></li>
-                </ul>
             {{/if}}
         {{else}}
             <!-- Menu do visitante -->
             <ul>
-                <li class="login-item">
-                    <i class="bi bi-person-circle"></i>
-                    <div class="login-text">
-                        <a href="/login">Olá, faça seu login</a>
-                        <a href="/register">ou cadastre-se<i class="bi bi-chevron-down"></i></a>
-                    </div>
+                <!-- Filtros -->
+                <li>
+                    <form action="/produtos/filtro" class="form-filtro" method="get">
+                        <input type="text" name="marca" placeholder="Marca" />
+                        <input type="number" name="minPrice" placeholder="Preço Mínimo" />
+                        <input type="number" name="maxPrice" placeholder="Preço Máximo" />
+                        <input type="text" name="categoria" placeholder="Categoria" />
+                        <button type="submit" class="btn">Buscar</button>
+                    </form>
                 </li>
-                <li><a href="/"><i class="bi bi-shop"></i></a></li>
-                <li><a href="/"><i class="bi bi-heart"></i></a></li>
-                <li><a href="/"><i class="bi bi-basket"></i></a></li>
             </ul>
         {{/if}}
     </div>
@@ -148,6 +137,20 @@
         &copy; 2024
     </p>
 </footer>
+    <script>
+        import moment from 'moment';
+
+        export default {
+            methods: {
+                formatDate(date) {
+                    return moment(date).format('DD/MM/YYYY');
+                },
+                formatDateTime(date) {
+                    return moment(date).format('DD/MM/YYYY HH:mm:ss');
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

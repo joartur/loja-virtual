@@ -44,6 +44,7 @@
 #navbar ul li i {
 	color: #FFF;
 	margin: 0 10px;
+	font-size: 1.6em;
 }
 
 .search-header {
@@ -124,6 +125,21 @@
     font-size: 0.9em; 
     vertical-align: middle; 
 	font-weight: bold;
+}
+
+/* FILTROS */
+
+.form-filtro {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-filtro input, form button {
+    margin: 5px 0;
+}
+
+.form-filtro input[type="number"] {
+    width: 100px;
 }
 
 /* MAIN */
@@ -225,6 +241,10 @@
     padding: 1em;
 }
 
+.sidebar ul{
+	list-style: none;
+}
+
 .admin-info {
     margin-bottom: 1em;
     padding: 1em;
@@ -314,7 +334,7 @@ form input[type='submit']:hover,
 }
 
 .tought-form-container a:hover{
-	color: #fff;
+	color: #333;
 }
 .tought-form-container h1 {
 	margin: 1em 0;

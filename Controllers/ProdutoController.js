@@ -18,6 +18,34 @@ class ProdutoController {
             res.status(500).send('Erro ao buscar produtos.');
         }
     }
+
+    static async filtroProdutos(req, res) {
+        const { marca, minPrice, maxPrice, categoria } = req.query;
+
+        try {
+            const produtos = await Produto.findAll({
+                where: {
+                    ...(marca && { marca: { [Op.like]: `%${marca}%` } }),
+                    ...(minPrice && { price: { [Op.gte]: parseFloat(minPrice) } }),
+                    ...(maxPrice && { price: { [Op.lte]: parseFloat(maxPrice) } }),
+                    ...(categoria && { category: { [Op.like]: `%${categoria}%` } })
+                },
+                order: [['createdAt', 'DESC']]
+            });
+
+            res.render('produtos/filtro', {
+                produtos,
+                marca,
+                minPrice,
+                maxPrice,
+                categoria
+            });
+        } catch (err) {
+            console.error('Erro ao buscar produtos:', err);
+            res.status(500).send('Erro ao buscar produtos.');
+        }
+    }
+
     static async showProdutos(req, res) {
         let search = '';
         if (req.query.search) {

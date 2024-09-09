@@ -5,24 +5,19 @@ class AdminController {
     static async layout(req, res, next) {
         try {
             const userId = req.session.userid;
-            const user = await User.findByPk(userId);
-
-            if (!user) {
-                return res.redirect('/login'); // Redirecionar se o usuário não estiver logado
+            if (!userId) {
+                return next(); // Não há usuário logado
             }
-
-            req.session.userRole = user.role; // Armazenar o papel do usuário na sessão
-
-            res.locals.session = {
-                userid: userId,
-                userRole: user.role,
-                user: user.toJSON() // Adicionar usuário aos locals
-            };
-
-            next(); // Continue para o próximo middleware
+    
+            const user = await User.findByPk(userId);
+            if (user) {
+                req.session.userRole = user.role; // Armazenar o papel do usuário na sessão
+                res.locals.user = user.toJSON();  // Adicionar o usuário às variáveis locais
+            }
+            next();
         } catch (error) {
-            console.error('Erro ao obter dados do usuário:', error);
-            next(error); // Passar erro para o middleware de tratamento de erros
+            console.error('Erro ao carregar dados do layout:', error);
+            next(error);
         }
     }
 
@@ -89,6 +84,24 @@ class AdminController {
             console.error('Erro ao criar administrador:', error);
             req.flash('message', 'Erro ao criar administrador!');
             res.redirect('/admin/register');
+        }
+    }
+
+    static async editClient(req, res) {
+        try {
+            const userId = req.session.userid;
+            const user = await User.findByPk(userId);
+    
+            if (!user) {
+                req.flash('message', 'Usuário não encontrado!');
+                return res.redirect('/');
+            }
+    
+            res.render('produtos/cliente_update', { user: user.toJSON() });
+        } catch (error) {
+            console.error('Erro ao exibir formulário de edição:', error);
+            req.flash('message', 'Erro ao exibir formulário de edição!');
+            res.redirect('/');
         }
     }
 
