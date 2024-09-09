@@ -95,6 +95,31 @@
                     <p><strong>Criado em:</strong> {{formatDate user.createdAt}}</p>
                     <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
                 </div>
+                <h2>Filtros</h2>
+                <ul>
+                    <!-- Filtros -->
+                    <li>
+                        <form action="/produtos/filtro" class="form-filtro" method="get">
+                        <div class="form-control">
+                            <input type="text" name="marca" placeholder="Marca" />
+                        </div>
+                        <div class="form-control">
+                            <table>
+                                <td>
+                                    <input type="number" name="minPrice" placeholder="Preço Mínimo" />
+                                </td>
+                                <td>
+                                    <input type="number" name="maxPrice" placeholder="Preço Máximo" />
+                                </td>
+                            </table>                        
+                        </div>
+                        <div class="form-control">
+                            <input type="text" name="categoria" placeholder="Categoria" />
+                        </div>
+                            <button type="submit" class="btn">Buscar</button>
+                        </form>
+                    </li>
+                </ul>
             {{else}}
                 <!-- Informações do cliente e menu do cliente -->
                 <div class="admin-info">
@@ -103,17 +128,55 @@
                     <p><strong>Cliente desde:</strong> {{formatDate user.createdAt}}</p>
                     <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
                 </div>
+                    <h2>Filtros</h2>
+                    <ul>
+                        <!-- Filtros -->
+                        <li>
+                            <form action="/produtos/filtro" class="form-filtro" method="get">
+                            <div class="form-control">
+                                <input type="text" name="marca" placeholder="Marca" />
+                            </div>
+                            <div class="form-control">
+                                <table>
+                                    <td>
+                                        <input type="number" name="minPrice" placeholder="Preço Mínimo" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="maxPrice" placeholder="Preço Máximo" />
+                                    </td>
+                                </table>                        
+                            </div>
+                            <div class="form-control">
+                                <input type="text" name="categoria" placeholder="Categoria" />
+                            </div>
+                                <button type="submit" class="btn">Buscar</button>
+                            </form>
+                        </li>
+                    </ul>
             {{/if}}
         {{else}}
             <!-- Menu do visitante -->
+            <h2>Filtros</h2>
             <ul>
                 <!-- Filtros -->
                 <li>
                     <form action="/produtos/filtro" class="form-filtro" method="get">
+                    <div class="form-control">
                         <input type="text" name="marca" placeholder="Marca" />
-                        <input type="number" name="minPrice" placeholder="Preço Mínimo" />
-                        <input type="number" name="maxPrice" placeholder="Preço Máximo" />
+                    </div>
+                    <div class="form-control">
+                        <table>
+                            <td>
+                                 <input type="number" name="minPrice" placeholder="Preço Mínimo" />
+                            </td>
+                            <td>
+                                <input type="number" name="maxPrice" placeholder="Preço Máximo" />
+                            </td>
+                        </table>                        
+                    </div>
+                    <div class="form-control">
                         <input type="text" name="categoria" placeholder="Categoria" />
+                    </div>
                         <button type="submit" class="btn">Buscar</button>
                     </form>
                 </li>
@@ -137,20 +200,6 @@
         &copy; 2024
     </p>
 </footer>
-    <script>
-        import moment from 'moment';
-
-        export default {
-            methods: {
-                formatDate(date) {
-                    return moment(date).format('DD/MM/YYYY');
-                },
-                formatDateTime(date) {
-                    return moment(date).format('DD/MM/YYYY HH:mm:ss');
-                }
-            }
-        }
-    </script>
 </body>
 
 </html>

@@ -15,14 +15,21 @@
         }
 
         .products-grid li {
-            border: 1px solid #ddd;
             padding: 16px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .products-grid li a{
+            text-decoration: none;
         }
 
         .products-grid h3 {
+            margin: 10px 0;
+        }
+
+        .products-grid span {
             margin-top: 0;
+            font-size: 14px;
         }
 
         .products-grid p {
@@ -54,8 +61,8 @@
                         {{else}}
                             <p>Imagem não disponível</p>
                         {{/if}}
-                        <h3>{{this.name}}</h3>
-                        <p>Preço: R$ {{this.price}}</p>
+                        <span>{{truncate this.name 50}}</span>
+                        <h3>R$ {{this.price}}</h3>
                         </a>
                     </li>
                 {{/each}}

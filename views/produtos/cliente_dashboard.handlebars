@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrador</title>
+    <title>Dashboard Cliente</title>
     <link rel="stylesheet" href="/css/styles.css">
     <style>
         .products-grid {
@@ -15,17 +15,14 @@
         }
 
         .products-grid li {
+            border: 1px solid #ddd;
             padding: 16px;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .products-grid h3 {
-            margin: 10px 0;
-        }
-
-        .products-grid span {
             margin-top: 0;
-            font-size: 14px;
         }
 
         .products-grid p {
@@ -47,7 +44,6 @@
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            width: 120px;
         }
 
         .btn-edit:hover {
@@ -63,7 +59,6 @@
             text-align: center;
             text-decoration: none;
             cursor: pointer;
-            width: 150px;
         }
 
         .btn-delete:hover {
@@ -83,7 +78,6 @@
             border: none;
             cursor: pointer;
             margin-right: 5px;
-            width: 100%;
         }
 
         .btn-cancel {
@@ -92,25 +86,25 @@
             padding: 5px 10px;
             border: none;
             cursor: pointer;
-            width: 100%;
         }                
     </style>
 </head>
 <body>
     <main>
         {{#if emptyProdutos}}
-            <p>Nenhum produto foi adicionado ainda. <a href="/produtos/add">Clique aqui</a> para adicionar</p>
+            <p>Você ainda não adicionou produtos ao seu carrinho. <a href="/">Clique aqui</a> para adicionar</p>
         {{else}}
             <ul class="products-grid">
                 {{#each produtos}}
                     <li>
+                        <h3>{{this.name}}</h3>
                         {{#if this.image}}
                             <img src="{{this.image}}" alt="{{this.name}}">
                         {{else}}
                             <p>Imagem não disponível</p>
                         {{/if}}       
-                        <span>{{truncate this.name 50}}</span>
-                        <h3>R$ {{this.price}}</h3>                           
+                        <p>Preço: R$ {{this.price}}</p>            
+                        <p>{{truncate this.description 100}}</p>                      
                         <!-- Botão de Editar -->
                         <a href="/produtos/edit/{{this.id}}" class="btn-edit">Editar</a>
                         <div class="produto" id="produto-{{this.id}}">
@@ -122,7 +116,7 @@
                                     <button type="button" class="btn-cancel" onclick="cancelarExclusao(this)">Cancelar</button>
                                 </div>
                             </form>
-                        </div>              
+                        </div>             
                     </li>
                 {{/each}}
             </ul>
