@@ -7,5 +7,5 @@
 <p>npm install , XAMPP & MySQL Workbench</p>
 
 <p>
-  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="400px" alt="Exemplo">
+  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="100%" alt="Exemplo">
 </p>
