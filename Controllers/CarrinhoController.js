@@ -15,20 +15,39 @@ class CarrinhoController {
     // Criar uma nova lista com cópias dos itens, evitando propriedades de protótipo
     const carrinhoData = carrinho.map(item => ({
       Produto: {
-        id: item.Produto.id,  // Adicione esta linha
+        id: item.Produto.id,
         name: item.Produto.name,
         image: item.Produto.image,
-        priceFormatted: item.Produto.priceFormatted
+        price: item.Produto.price,
+        priceFormatted: item.Produto.priceFormatted // Verifique se isso está sendo atribuído corretamente
       },
       quantity: item.quantity
     }));
-
+    
     // Calcular o total do carrinho
-    const total = Number(carrinho.reduce((acc, item) => acc + (item.Produto.price * item.quantity), 0)).toFixed(2);
+    const total = parseFloat(carrinho.reduce((acc, item) => acc + (item.Produto.price * item.quantity), 0)).toFixed(2);
 
     // Passe 'carrinhoData' e 'total' formatado para o template
     res.render('carrinho/view', { carrinho: carrinhoData, total });
   }
+
+  static async getCarrinho(req, res, next) {
+    try {
+        const userId = req.session.userid;
+        const carrinho = await Carrinho.findAll({
+            where: { UserId: userId }
+        });
+
+        const quantidadeProdutos = carrinho.reduce((acc, item) => acc + item.quantity, 0);
+
+        res.locals.quantidadeProdutos = quantidadeProdutos;
+        next();
+    } catch (err) {
+        console.error('Erro ao obter quantidade de produtos no carrinho:', err);
+        res.locals.quantidadeProdutos = 0;
+        next();
+    }
+ }
 
   // Adicionar produto ao carrinho
   static async addProduto(req, res) {
@@ -36,27 +55,29 @@ class CarrinhoController {
     const userId = req.session.userid;
 
     try {
-        // Verifique se o userId está disponível
-        console.log(`User ID: ${userId}`);
-
-        // Busca o produto pelo ID
         const produto = await Produto.findOne({ where: { id: produtoId } });
         if (!produto) {
             console.log(`Produto não encontrado com ID: ${produtoId}`);
             return res.status(404).send('Produto não encontrado');
         }
 
-        // Adicionar produto ao carrinho
-        await Carrinho.create({ ProdutoId: produtoId, UserId: userId });
-        console.log(`Produto com ID ${produtoId} adicionado ao carrinho para o usuário ${userId}`);
+        // Verificar se o produto já está no carrinho
+        const carrinhoItem = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
+        if (carrinhoItem) {
+            // Atualizar quantidade
+            carrinhoItem.quantity += 1;
+            await carrinhoItem.save();
+        } else {
+            // Adicionar novo item no carrinho
+            await Carrinho.create({ ProdutoId: produtoId, UserId: userId, quantity: 1 });
+        }
 
-        // Redireciona para a página do carrinho
         res.redirect('/carrinho');
     } catch (err) {
         console.error('Erro ao adicionar produto ao carrinho:', err);
         res.status(500).send('Erro ao adicionar produto ao carrinho');
     }
-  }
+}
 
   // Adicionar produto ao carrinho via corpo da requisição
   static async addToCart(req, res) {

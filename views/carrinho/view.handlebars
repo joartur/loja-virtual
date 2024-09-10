@@ -1,67 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Carrinho</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        .product-image {
-            width: 100px; /* Ajuste o tamanho conforme necessário */
-            height: auto;
-        }
-        .btn-delete {
-            color: red;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Meu Carrinho</h1>
-    </header>
+  <header>
+      <h1>Meu Carrinho</h1>
+  </header>
 
-<main>
-    <table>
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Opções</th>
-            </tr>
-        </thead>
-        <tbody>
+  <main>
+      <div class="card-container">
           {{#each carrinho}}
-          <tr>
-            <td>
-              {{#if this.Produto.image}}
-                <img src="{{this.Produto.image}}" alt="{{this.Produto.name}}" class="product-image">
-              {{else}}
-                Imagem não disponível
-              {{/if}}
-              <a href="/produtos/produto/detalhes/{{this.Produto.id}}">{{this.Produto.name}}</a>
-              
-            </td>
-            <td>R$ {{this.Produto.priceFormatted}}</td>
-            <td>{{this.quantity}}</td>
-            <td>
-              <!-- Link para visualizar detalhes do produto -->
-              <a href="/produtos/produto/detalhes/{{this.Produto.id}}">Ver Detalhes</a>
-              
-              <!-- Ícone de excluir item -->
-              <form action="/carrinho/remover/{{this.Produto.id}}" method="POST" style="display: inline;">
-                <button type="submit" class="btn-delete">Excluir</button>
-              </form>     
-            </td>
-          </tr>
+          <div class="card">
+              <img src="{{#if this.Produto.image}}{{this.Produto.image}}{{else}}/images/default-product.png{{/if}}" alt="{{this.Produto.name}}">
+              <div class="card-content">
+                  <span class="card-title">{{this.Produto.name}}</span>
+                  <p class="card-price">{{this.Produto.priceFormatted}}</p>
+                  <p>Quantidade: {{this.quantity}}</p>
+              </div>
+              <div class="card-actions">
+                    <button class="btn-ed"><a href="/produtos/produto/detalhes/{{this.Produto.id}}">Ver Detalhes</a></button>
+                  <form action="/carrinho/remover/{{this.Produto.id}}" method="POST" onsubmit="return confirm('Tem certeza que deseja remover este produto?');">
+                      <button type="submit" class="btn-del"><i class="bi bi-trash"></i> Remover</button>
+                  </form>
+              </div>
+          </div>
           {{/each}}
-        </tbody>
-    </table>
+      </div>
 
-    <p>Total: R$ {{total}}</p>
-</main>
-</body>
-</html>
+      <p>Total de compras: <b>R$ {{total}}</b></p>
+  </main>

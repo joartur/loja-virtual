@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
 class AuthController {
+
     static login(req, res) {
         res.render('auth/login');
     }
@@ -61,6 +62,34 @@ class AuthController {
 
     static register(req, res) {
         res.render('auth/register');
+    }
+
+    // Função para exibir o perfil do usuário
+    static async showUserProfile(req, res) {
+        try {
+            const userId = req.session.userid;
+            const user = await User.findByPk(userId);
+    
+            if (!user) {
+                req.flash('message', 'Usuário não encontrado!');
+                return res.redirect('/');
+            }
+    
+            // Certifique-se de que os dados estão corretos
+            console.log('User CreatedAt:', user.createdAt);
+            console.log('User LastLogin:', user.lastLogin || user.createdAt);
+    
+            res.render('/produtos/dashboard', {
+                user: {
+                    createdAt: user.createdAt,
+                    lastLogin: user.lastLogin || user.createdAt // Se lastLogin for null, usa createdAt
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao buscar usuário:', error);
+            req.flash('message', 'Erro interno do servidor!');
+            res.redirect('/');
+        }
     }
 
     static async registerPost(req, res) {
@@ -154,7 +183,7 @@ class AuthController {
             await user.save();
     
             req.flash('message', 'Dados atualizados com sucesso!');
-            res.redirect('/');
+            res.redirect('/produtos/cliente_update');
         } catch (error) {
             console.error('Erro ao atualizar dados do cliente:', error);
             req.flash('message', 'Erro ao atualizar dados!');

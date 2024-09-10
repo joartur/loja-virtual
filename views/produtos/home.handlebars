@@ -44,28 +44,28 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Todos os Produtos</h1>
-    </header>
-
     <main>
         {{#if emptyProdutos}}
             <p>Nenhum produto encontrado.</p>
         {{else}}
-            <ul class="products-grid">
+            <div class="card-container">
                 {{#each produtos}}
-                    <li>
+                   <div class="card">
                         <a href="/produtos/produto/{{this.id}}">                        
                         {{#if this.image}}
                             <img src="{{this.image}}" alt="{{this.name}}">
                         {{else}}
                             <p>Imagem não disponível</p>
                         {{/if}}
-                        <span>{{truncate this.name 50}}</span>
-                        <h3>R$ {{this.price}}</h3>
+                        <div class="card-content">
+                        <span class="card-title">{{truncate this.name 50}}</span>
+                        <p class="card-price">R$ {{this.price}}</p>
+                        </div>
                         </a>
+                    </div>
                     </li>
                 {{/each}}
+            </div>
             </ul>
         {{/if}}
         <div class="pagination">

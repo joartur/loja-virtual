@@ -7,13 +7,14 @@ const User = require('./models/User');
 const Produto = require('./models/Produto');
 const conn = require('./db/conn');
 const ProdutoController = require('./Controllers/ProdutoController');
+const AdminController = require('./Controllers/AdminController');
+const CarrinhoController = require('./Controllers/CarrinhoController');
+const handlebars = require('./helpers/handlebarsHelpers');
 const produtosRoutes = require('./routes/produtosRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const authRoutes = require('./routes/authRoutes');
 const carrinhoRoutes = require('./routes/carrinhoRoutes');
-
-// Importa os helpers do arquivo separado
-const handlebars = require('./helpers/handlebarsHelpers');
+const { getQuantidadeProdutos } = require('./helpers/carrinho');
 
 const app = express();
 
@@ -52,6 +53,8 @@ const checkAuth = (req, res, next) => {
     }
   };
 
+app.use(AdminController.layout);
+
 app.use(flash());
 app.use(express.static('public'));
 
@@ -62,6 +65,16 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(async (req, res, next) => {
+    if (req.session.userid) {
+      const quantidadeProdutos = await getQuantidadeProdutos(req.session.userid);
+      res.locals.quantidadeProdutos = quantidadeProdutos;
+    } else {
+      res.locals.quantidadeProdutos = 0; // Garantir que a variável seja definida mesmo quando o usuário não está logado
+    }
+    next();
+  });
+
 // Rotas
 app.use('/', authRoutes);
 app.use('/', carrinhoRoutes);
@@ -69,6 +82,7 @@ app.use('/admin', adminRoutes);
 app.use('/produtos', produtosRoutes);
 app.get('/', ProdutoController.showProdutos);
 app.put('/produtos/update/:id', ProdutoController.updateProdutoSave);
+app.use(CarrinhoController.getCarrinho);
 
 app.set('views', './views');
 

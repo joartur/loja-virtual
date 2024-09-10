@@ -23,9 +23,16 @@ class AdminController {
 
     static async dashboard(req, res) {
         try {
-            // Obter todos os administradores ou outros dados necessários
-            const admins = await User.findAll({ where: { role: 'admin' } });
-            res.render('admin_dashboard', { admins });
+            const userId = req.session.userid;
+            const admin = await User.findByPk(userId);
+    
+            if (!admin) {
+                req.flash('message', 'Administrador não encontrado.');
+                return res.redirect('/login');
+            }
+    
+            // Renderizar o dashboard com os dados do admin
+            res.render('admin_dashboard', { admin: admin.toJSON() });
         } catch (error) {
             console.error('Erro ao carregar o dashboard do administrador:', error);
             res.redirect('/login');

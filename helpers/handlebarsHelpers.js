@@ -28,10 +28,14 @@ handlebars.registerHelper('lt', (a, b) => a < b);
 // Helper para truncar uma string
 handlebars.registerHelper('truncate', (str, len) => str.substring(0, len) + (str.length > len ? '...' : ''));
 
-// Helper para formatar datas
-handlebars.registerHelper('formatDate', (date) => moment(date).format('DD/MM/YYYY'));
+// Helper para formatar a data
+handlebars.registerHelper('formatDate', function(date) {
+    return date ? moment(date).format('DD/MM/YYYY') : 'Data não disponível';
+});
 
-// Helper para formatar data e hora
-handlebars.registerHelper('formatDateTime', (date) => moment(date).format('DD/MM/YYYY HH:mm'));
+// Helper para formatar a data e hora
+handlebars.registerHelper('formatDateTime', function(date) {
+    return date ? moment(date).format('DD/MM/YYYY HH:mm') : 'Data não disponível';
+});
 
 module.exports = handlebars;

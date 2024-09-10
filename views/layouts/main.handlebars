@@ -31,7 +31,14 @@
                 {{else}}
                     <!-- Menu do cliente -->
                     <li><a href="/"><i class="bi bi-shop" title="Produtos"></i></a></li> 
-                    <li><a href="/carrinho"><i class="bi bi-basket" title="Meu Carrinho"></i></a></li> 
+                    <li class="icon-container">
+                        <a href="/carrinho">
+                            <i class="bi bi-basket" title="Meu Carrinho"></i>
+                            {{#if quantidadeProdutos}}
+                                <span class="quantidade-carrinho">{{quantidadeProdutos}}</span>
+                            {{/if}}
+                        </a>
+                    </li>
                     <li><a href="/produtos/cliente_update"><i class="bi bi-pencil-square" title="Editar Dados"></i></a></li>
                     <li><a href="/logout"><i class="bi bi-door-closed" title="Sair"></i></a></li>
                 {{/if}}
@@ -90,10 +97,10 @@
                 <!-- Informações do administrador e menu do administrador -->
                 <div class="admin-info">
                     <h3>Administrador</h3>
-                    <p><strong>Nome:</strong> {{user.name}}</p>
-                    <p><strong>Email:</strong> {{user.email}}</p>
-                    <p><strong>Criado em:</strong> {{formatDate user.createdAt}}</p>
-                    <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
+                    <p><strong>Nome:</strong> {{admin.name}}</p>
+                    <p><strong>Email:</strong> {{admin.email}}</p>
+                    <p><strong>Criado em:</strong> {{formatDate admin.createdAt}}</p>
+                    <p><strong>Último acesso:</strong> {{formatDateTime admin.lastLogin}}</p>   
                 </div>
                 <h2>Filtros</h2>
                 <ul>
@@ -125,8 +132,8 @@
                 <div class="admin-info">
                     <p><strong>Cliente:</strong> {{user.name}}</p>
                     <p><strong>Email:</strong> {{user.email}}</p>
-                    <p><strong>Cliente desde:</strong> {{formatDate user.createdAt}}</p>
-                    <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>
+                    <p><strong>Criado em:</strong> {{formatDate user.createdAt}}</p>
+                    <p><strong>Último acesso:</strong> {{formatDateTime user.lastLogin}}</p>               
                 </div>
                     <h2>Filtros</h2>
                     <ul>
