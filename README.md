@@ -4,6 +4,8 @@
 
 <p>Área de Visitante, Cliente e Administrador</p>
 
+<p>Node.js, Sequelize, Handlebars</p>
+
 <p>npm install , XAMPP & MySQL Workbench</p>
 
 <p>
