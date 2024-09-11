@@ -1,8 +1,8 @@
-<div class="tought-form-container">
+<div class="produto-form-container">
     <a href="/produtos/admin/dashboard"> Voltar </a>
     <h1>Adicionar Produto:</h1>
 
-    <form action="/produtos/add" method="POST" id="toughtForm">
+    <form action="/produtos/add" method="POST" id="produtoForm">
         <div class="form-control">
             <label for="name">Nome do Produto:</label>
             <input type="text" name="name" placeholder="Digite o nome do produto" required>
@@ -38,7 +38,7 @@
 </div>
 
 {{!-- <script>
-    document.getElementById('toughtForm').addEventListener('submit', function(event) {
+    document.getElementById('produtoForm').addEventListener('submit', function(event) {
             const confirmed = confirm('Você realmente deseja criar este pensamento?');
             if (!confirmed) {
                 event.preventDefault();

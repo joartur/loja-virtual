@@ -15,6 +15,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const authRoutes = require('./routes/authRoutes');
 const carrinhoRoutes = require('./routes/carrinhoRoutes');
 const { getQuantidadeProdutos } = require('./helpers/carrinho');
+const path = require('path');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.set('view engine', 'handlebars');
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(session({
     name: "session",

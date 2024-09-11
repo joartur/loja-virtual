@@ -10,13 +10,21 @@
               <div class="card-content">
                   <span class="card-title">{{this.Produto.name}}</span>
                   <p class="card-price">{{this.Produto.priceFormatted}}</p>
-                  <p>Quantidade: {{this.quantity}}</p>
               </div>
+                <div class="quantity-control">
+                <p>Quantidade: 
+                    <form action="/carrinho/atualizar/{{this.Produto.id}}" method="POST" class="quantity-form">
+                    <button type="submit" name="action" value="decrease" class="btn-quantity">-</button>
+                    <span>{{this.quantity}}</span>
+                    <button type="submit" name="action" value="increase" class="btn-quantity">+</button>
+                    </form>
+                </p>
+                </div>            
               <div class="card-actions">
-                    <button class="btn-ed"><a href="/produtos/produto/detalhes/{{this.Produto.id}}">Ver Detalhes</a></button>
-                  <form action="/carrinho/remover/{{this.Produto.id}}" method="POST" onsubmit="return confirm('Tem certeza que deseja remover este produto?');">
-                      <button type="submit" class="btn-del"><i class="bi bi-trash"></i> Remover</button>
-                  </form>
+                <button class="btn-ed"><a href="/produtos/produto/detalhes/{{this.Produto.id}}">Ver Detalhes</a></button>
+                <form action="/carrinho/remover/{{this.Produto.id}}" method="POST" onsubmit="return confirm('Tem certeza que deseja remover este produto?');">
+                <button type="submit" class="btn-del"><i class="bi bi-trash"></i> Remover</button>
+                </form>
               </div>
           </div>
           {{/each}}

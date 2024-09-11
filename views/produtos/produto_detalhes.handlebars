@@ -1,31 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Produto</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        .product-details {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+<header>
+    <h1>Detalhes do Produto</h1>
+</header>
 
-        .product-details img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Detalhes do Produto</h1>
-    </header>
-
-<main>
+<main class="produtos-detalhes">
     <div class="product-details">
         <h2>{{produto.name}}</h2>
         {{#if produto.image}}
@@ -36,14 +13,21 @@
         <p><strong>Marca:</strong> {{produto.marca}}</p>
         <p><strong>Descrição:</strong> {{produto.description}}</p>
         <p><strong>Preço:</strong> R$ {{produto.price}}</p>
-        <p><strong>Quantidade:</strong> {{produto.quant}}</p>
+
+        {{#if produto.quant}}
+            <p><strong>Quantidade:</strong> {{produto.quant}}</p>
+        {{else}}
+            <p style="color: red; font-weight: bold;">PRODUTO INDISPONÍVEL</p>
+        {{/if}}
+
         <p><strong>Categoria:</strong> {{produto.category}}</p>
 
-        <form action="/carrinho/add/{{produto.id}}" method="POST">
-            <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
-        </form>
-
+        {{#if produto.quant}}
+            <form action="/carrinho/add/{{produto.id}}" method="POST">
+                <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+            </form>
+        {{else}}
+            <button class="btn btn-secondary" disabled>Indisponível</button>
+        {{/if}}
     </div>
 </main>
-</body>
-</html>

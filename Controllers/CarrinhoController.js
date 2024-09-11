@@ -53,31 +53,43 @@ class CarrinhoController {
   static async addProduto(req, res) {
     const produtoId = req.params.id;
     const userId = req.session.userid;
-
+  
     try {
-        const produto = await Produto.findOne({ where: { id: produtoId } });
-        if (!produto) {
-            console.log(`Produto não encontrado com ID: ${produtoId}`);
-            return res.status(404).send('Produto não encontrado');
-        }
-
-        // Verificar se o produto já está no carrinho
-        const carrinhoItem = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
-        if (carrinhoItem) {
-            // Atualizar quantidade
-            carrinhoItem.quantity += 1;
-            await carrinhoItem.save();
-        } else {
-            // Adicionar novo item no carrinho
-            await Carrinho.create({ ProdutoId: produtoId, UserId: userId, quantity: 1 });
-        }
-
-        res.redirect('/carrinho');
+      const produto = await Produto.findOne({ where: { id: produtoId } });
+  
+      if (!produto) {
+        console.log(`Produto não encontrado com ID: ${produtoId}`);
+        return res.status(404).send('Produto não encontrado');
+      }
+  
+      // Verificar se ainda há estoque disponível
+      if (produto.quant <= 0) {
+        req.flash('message', 'Produto indisponível.');
+        return res.redirect(`/produtos/${produtoId}`);
+      }
+  
+      // Verificar se o produto já está no carrinho
+      const carrinhoItem = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
+  
+      if (carrinhoItem) {
+        // Atualizar quantidade no carrinho
+        carrinhoItem.quantity += 1;
+        await carrinhoItem.save();
+      } else {
+        // Adicionar novo item no carrinho
+        await Carrinho.create({ ProdutoId: produtoId, UserId: userId, quantity: 1 });
+      }
+  
+      // Atualizar a quantidade no estoque
+      produto.quant -= 1;
+      await produto.save();
+  
+      res.redirect('/carrinho');
     } catch (err) {
-        console.error('Erro ao adicionar produto ao carrinho:', err);
-        res.status(500).send('Erro ao adicionar produto ao carrinho');
+      console.error('Erro ao adicionar produto ao carrinho:', err);
+      res.status(500).send('Erro ao adicionar produto ao carrinho');
     }
-}
+  }
 
   // Adicionar produto ao carrinho via corpo da requisição
   static async addToCart(req, res) {
@@ -103,30 +115,89 @@ class CarrinhoController {
     }
   }
 
+  static async atualizarProduto(req, res) {
+    const produtoId = req.params.id;
+    const userId = req.session.userid;
+    const { action } = req.body;  // Verifica se é aumentar ou diminuir a quantidade
+  
+    try {
+      // Buscar o item do carrinho
+      const item = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
+  
+      if (!item) {
+        req.flash('message', 'Item não encontrado no carrinho.');
+        return res.redirect('/carrinho');
+      }
+  
+      // Buscar o produto
+      const produto = await Produto.findByPk(produtoId);
+  
+      if (!produto) {
+        req.flash('message', 'Produto não encontrado.');
+        return res.redirect('/carrinho');
+      }
+  
+      // Verificar se a ação é aumentar ou diminuir a quantidade
+      if (action === 'increase') {
+        // Verificar se há estoque disponível
+        if (produto.quant <= 0) {
+          req.flash('message', 'Produto indisponível.');
+          return res.redirect('/carrinho');
+        }
+        item.quantity += 1;
+        produto.quant -= 1;  // Diminuir o estoque do produto
+      } else if (action === 'decrease' && item.quantity > 1) {
+        item.quantity -= 1;
+        produto.quant += 1;  // Aumentar o estoque do produto
+      } else if (action === 'decrease' && item.quantity === 1) {
+        // Se a quantidade for 1 e o botão de diminuir for clicado, remova o item
+        await item.destroy();
+        produto.quant += 1;  // Aumentar o estoque do produto
+        req.flash('message', 'Produto removido do carrinho.');
+        return res.redirect('/carrinho');
+      }
+  
+      // Salvar a nova quantidade no carrinho e atualizar o estoque do produto
+      await item.save();
+      await produto.save();
+  
+      req.flash('message', 'Quantidade atualizada com sucesso!');
+      res.redirect('/carrinho');
+    } catch (err) {
+      console.error(err);
+      req.flash('message', 'Erro ao atualizar a quantidade.');
+      res.redirect('/carrinho');
+    }
+  }
+
   static async removeProduto(req, res) {
     const produtoId = req.params.id;
     const userId = req.session.userid;
-
+  
     try {
-        // Encontrar o item do carrinho que deve ser removido
-        const item = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
-
-        if (!item) {
-            req.flash('message', 'Item não encontrado no carrinho.');
-            return res.redirect('/carrinho');
-        }
-
-        // Remover o item do carrinho
-        await item.destroy();
-
-        req.flash('message', 'Produto removido do carrinho com sucesso!');
-        res.redirect('/carrinho');
+      const item = await Carrinho.findOne({ where: { ProdutoId: produtoId, UserId: userId } });
+  
+      if (!item) {
+        req.flash('message', 'Item não encontrado no carrinho.');
+        return res.redirect('/carrinho');
+      }
+  
+      // Remover o item do carrinho
+      await item.destroy();
+  
+      // Atualizar a quantidade de estoque do produto
+      const produto = await Produto.findByPk(produtoId);
+      produto.quant += item.quantity; // Incrementa a quantidade do produto removido
+      await produto.save();
+  
+      req.flash('message', 'Produto removido do carrinho com sucesso!');
+      res.redirect('/carrinho');
     } catch (err) {
-        console.error(err);
-        req.flash('message', 'Erro ao remover o produto do carrinho.');
-        res.redirect('/carrinho');
+      console.error('Erro ao remover o produto do carrinho:', err);
+      req.flash('message', 'Erro ao remover o produto do carrinho.');
+      res.redirect('/carrinho');
     }
- }
+  }
 }
 
 module.exports = CarrinhoController;

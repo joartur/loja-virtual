@@ -24,6 +24,10 @@ const User = sequelize.define('User', {
     lastLogin: {
         type: DataTypes.DATE,
         allowNull: true
+    },
+    profileImage: { 
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     tableName: 'Users',

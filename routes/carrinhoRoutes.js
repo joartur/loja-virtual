@@ -8,5 +8,7 @@ router.get('/carrinho', checkAuth, CarrinhoController.viewCarrinho);
 router.post('/carrinho/add/:id', checkAuth, CarrinhoController.addProduto);
 router.post('/carrinho/add', checkAuth, CarrinhoController.addToCart);
 router.post('/carrinho/remover/:id', checkAuth, CarrinhoController.removeProduto);
+router.post('/carrinho/atualizar/:id', CarrinhoController.atualizarProduto);
+router.post('/carrinho/remover/:id', CarrinhoController.removeProduto);
 
 module.exports = router;

@@ -4,12 +4,12 @@
     </div>
     <h3>Área do cliente</h3>
     <ul>
-        {{#each toughts}}
+        {{#each produtos}}
             <li>
                 <span class="label">{{this.title}}</span>
                 <span class="actions">
-                    <a href="/toughts/edit/{{this.id}}" class="btn">Editar</a>
-                    <form action="/toughts/remove" method="POST">
+                    <a href="/produtos/edit/{{this.id}}" class="btn">Editar</a>
+                    <form action="/produtos/remove" method="POST">
                         <input type="hidden" name="id" value="{{this.id}}">
                         <input type="submit" value="Excluir">
                     </form>
@@ -17,8 +17,8 @@
             </li>
         {{/each}}
     </ul>
-    {{#if emptyToughts}}
-        <p>Ainda não há nenhum produto no seu carrinho! adicionar <a href="/toughts/add">aqui!</a></p>
+    {{#if emptyProdutos}}
+        <p>Ainda não há nenhum produto no seu carrinho! adicionar <a href="/produtos/add">aqui!</a></p>
     {{/if}}
 
     {{#if totalPages}}
