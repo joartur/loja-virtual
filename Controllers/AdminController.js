@@ -133,7 +133,7 @@ class AdminController {
     // Atualizar o administrador
     static async updateAdmin(req, res) {
         const { name, email, password, role } = req.body;
-        const adminId = req.session.userid; // Usando o ID da sessão
+        const adminId = req.session.userid;
 
         try {
             const admin = await User.findByPk(adminId);
@@ -152,6 +152,17 @@ class AdminController {
             if (password) {
                 const salt = bcrypt.genSaltSync(10);
                 admin.password = bcrypt.hashSync(password, salt);
+            }
+
+            // Se uma nova imagem de perfil for fornecida
+            if (req.file) {
+                // Remover a imagem antiga, se existir
+                if (admin.profileImage) {
+                    const oldImagePath = path.join(__dirname, '../public/uploads/', admin.profileImage);
+                    fs.unlinkSync(oldImagePath); // Apaga a imagem antiga
+                }
+
+                admin.profileImage = req.file.filename; // Salva o novo nome da imagem
             }
 
             await admin.save();

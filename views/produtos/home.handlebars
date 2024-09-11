@@ -45,6 +45,18 @@
 </head>
 <body>
     <main>
+    {{#if search}}
+    <h1>Você está buscando por: <span>{{search}}</span></h1>
+        {{#if produtosQty}}
+            <p>Encontramos <span>{{produtosQty}}</span> produto(s)</p>
+        {{else}}
+            <p>Nenhum produto foi encontrado</p>
+        {{/if}}
+    {{else}}
+    <h1>Todos os produtos</h1>
+    {{/if}}       
+
+
         {{#if emptyProdutos}}
             <p>Nenhum produto encontrado.</p>
         {{else}}

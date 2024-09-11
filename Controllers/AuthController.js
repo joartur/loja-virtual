@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, 'public/uploads/cliente');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -109,8 +109,7 @@ class AuthController {
         // Verifica se as senhas conferem
         if (password !== confirmpassword) {
             req.flash('message', 'As senhas não conferem, tente novamente!');
-            res.render('auth/register');
-            return;
+            return res.render('auth/register');
         }
     
         // Verifica se o email já está em uso
@@ -118,8 +117,7 @@ class AuthController {
     
         if (checkUserExists) {
             req.flash('message', 'O email já está em uso!');
-            res.render('auth/register');
-            return;
+            return res.render('auth/register');
         }
     
         // Criptografa a senha
@@ -135,14 +133,12 @@ class AuthController {
         };
     
         try {
-            const createdUser = await User.create(user);
-            req.flash('message', 'Cadastro realizado com sucesso!');
-            req.session.userid = createdUser.id;
-            req.session.save(() => {
-                res.redirect('/produtos/dashboard');  // Redireciona para o dashboard de clientes
-            });
+            await User.create(user);
+            req.flash('message', 'Cadastro realizado com sucesso! Faça login para continuar.');
+            // Em vez de salvar o usuário na sessão, redirecione para a página de login
+            res.redirect('/login');
         } catch (err) {
-            console.log(err);
+            console.error(err);
             req.flash('message', 'Erro ao criar usuário!');
             res.render('auth/register');
         }

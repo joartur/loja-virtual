@@ -1,7 +1,7 @@
 <div class="produto-form-container">
     <p><a href="/produtos/admin/dashboard">Voltar</a></p>
     <h1>Alterar seus Dados</h1>
-    <form id="adminUpdateForm" action="/admin/update" method="POST">
+    <form id="adminUpdateForm" action="/admin/update" method="POST" enctype="multipart/form-data">
         <div class="form-control">
             <label for="name">Nome:</label>
             <input id="name" type="text" name="name" value="{{admin.name}}" placeholder="Digite o nome do administrador" required>
@@ -17,13 +17,17 @@
         <div class="form-control">
             <label for="confirmpassword">Confirmar nova Senha:</label>
             <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirme a nova senha">
-        </div>       
+        </div>
         <div class="form-control">
             <label for="role">Função:</label>
             <select id="role" name="role">
                 <option value="admin" {{#if (eq admin.role 'admin')}}selected{{/if}}>Administrador</option>
                 <option value="cliente" {{#if (eq admin.role 'cliente')}}selected{{/if}}>Cliente</option>
             </select>
+        </div>
+        <div class="form-control">
+            <label for="profileImage">Imagem de Perfil:</label>
+            <input type="file" id="profileImage" name="profileImage" accept="image/*">
         </div>
         <input type="submit" value="Atualizar">
     </form>

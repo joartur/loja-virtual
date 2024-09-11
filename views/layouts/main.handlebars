@@ -58,9 +58,6 @@
         </ul>
     </nav>
 
-
-
-
     <div class="menu-mobile">
         <i class="bi bi-list"></i>
         <a href="/" id="logo">
@@ -92,22 +89,13 @@
                 {{/if}}
             {{else}}
                 <!-- Menu do visitante -->
-                <li class="login-item">
-                    <i class="bi bi-person-circle"></i>
-                    <div class="login-text">
-                        <a href="/login">olá, faça seu login</a>
-                        <a href="/register">ou cadastre-se<i class="bi bi-chevron-down"></i></a>
-                    </div>
-                </li>
+                <li><a href="/login"><i class="bi bi-person-circle"></i></a></li>
                 <li><a href="/"><i class="bi bi-shop"></i></a></li>
                 <li><a href="/"><i class="bi bi-heart"></i></a></li>
                 <li><a href="/"><i class="bi bi-basket"></i></a></li>      
             {{/if}}
         </ul>         
     </div>
-
-
- 
 
 <main id="main">
         <div class="search-header-mobile">
@@ -154,7 +142,11 @@
             {{#if (eq session.userRole 'admin')}}
                 <!-- Informações do administrador e menu do administrador -->
                 <div class="admin-info">
-                    <h3>Administrador</h3>
+                    {{#if admin.profileImage}}
+                    <div class="form-control">
+                        <img src="/uploads/{{admin.profileImage}}" alt="Imagem de perfil" width="100">
+                    </div>
+                    {{/if}}                    
                     <p><strong>Nome:</strong> {{admin.name}}</p>
                     <p><strong>Email:</strong> {{admin.email}}</p>
                     <p><strong>Criado em:</strong> {{formatDate admin.createdAt}}</p>

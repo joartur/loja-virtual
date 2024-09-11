@@ -362,52 +362,85 @@ form input[type='submit']:hover,
 }
 
 /*CREATE / EDIT FORM */
-.produto-form-container a {
-    color: #F20544;
-}
-
-.produto-form-container a:hover {
-    color: #333;
+.produto-form-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
 }
 
 .produto-form-container h1 {
-    margin: 1em 0;
+    text-align: center;
+    font-size: 24px;
     color: #333;
-    padding: 0.3em;
-    border-left: 4px solid #F20544;
+    margin-bottom: 20px;
 }
 
-.produto-form-container form {
-    max-width: 100%; 
-    margin-top: 1.5em;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
+.produto-form-container a {
+    text-decoration: none;
+    color: #007bff;
+    display: block;
+    margin-bottom: 20px;
+    font-size: 14px;
+    transition: color 0.3s;
 }
 
+.produto-form-container a:hover {
+    color: #0056b3;
+}
+
+/* Estilos dos grupos de formulários */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    flex: auto; 
+    margin-bottom: 20px;
 }
 
 .form-group label {
-    margin-bottom: 0.5em;
+    display: block;
     font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
 }
 
-.form-group input {
-    padding: 0.5em;
+.form-group input,
+.form-group textarea {
+    width: 98%;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form-group:nth-child(odd) {
-    margin-right: 1em;
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
 }
 
-.form-control {
-    margin-top: 1em;
+/* Estilo do botão */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
 
 .btn {
@@ -602,8 +635,6 @@ footer p{
     top: -8px;
     right: -8px;
 }
-
-
 
 .icon-container {
     position: relative;
@@ -909,13 +940,19 @@ main p {
 		background: #F20544;
 	}
 	.menu-mobile {
-		padding: 1.0em 5em;
+		margin: 0;
+		padding: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		background: #F20544;
-		margin-left: 0;
+
 	}
+
+    .menu-mobile i.bi-list {
+        font-size: 2.6em;
+		font-weight: 900;		
+    }
 
 	.menu-mobile ul {
 		display: flex;
@@ -948,7 +985,7 @@ main p {
 		display: flex;
 		justify-content: space-between;
 		align-items: center; 
-		padding: 0.5em 1em;
+		padding: 0;
 		border-radius: 8px;
 	}
 
@@ -993,4 +1030,30 @@ main p {
 	.form-filtro input[type="number"] {
 		width: 92%;
 	}
+
+	/* CARRINHO */
+	.quantidade-carrinho {
+		top: -6px;
+		right: 0px;
+	}
+	/* CREATE / EDIT FORMS */
+	.produto-form-container {
+		width: 92%;
+	}
+    .produto-form-container {
+        padding: 15px;
+    }
+
+    .produto-form-container h1 {
+        font-size: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 13px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
 }

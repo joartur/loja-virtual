@@ -2,31 +2,40 @@
     <a href="/produtos/admin/dashboard"> Voltar </a>
     <h1>Editar Produto:</h1>
 
-    <form action="/produtos/edit/" method="POST">
+    <form action="/produtos/edit/" method="POST" enctype="multipart/form-data">
         <div class="form-control">
             <input type="hidden" name="id" value="{{produto.id}}">
-            <label for="name">Nome do Produto:</label>
-            <input type="text" id="name" name="name" value="{{produto.name}}" required>
-
-            <label for="marca">Marca:</label>
-            <input type="text" id="marca" name="marca" value="{{produto.marca}}">
-
-            <label for="description">Descrição:</label>
-            <textarea id="description" name="description" required>{{produto.description}}</textarea>
-
-            <label for="price">Preço:</label>
-            <input type="number" id="price" name="price" value="{{produto.price}}" required>
-
-            <label for="image">Imagem (URL):</label>
-            <input type="text" id="image" name="image" value="{{produto.image}}">
-
-            <label for="quant">Quantidade:</label>
-            <input type="number" id="quant" name="quant" value="{{produto.quant}}" required>
-
-            <label for="category">Categoria:</label>
-            <input type="text" id="category" name="category" value="{{produto.category}}">
-
-            <button type="submit" class="btn">Salvar Alterações</button>
+            <div class="form-group">
+                <label for="name">Nome do Produto:</label>
+                <input type="text" id="name" name="name" value="{{produto.name}}" required>
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" value="{{produto.marca}}">
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição:</label>
+                <textarea id="description" name="description" required>{{produto.description}}</textarea>
+            </div>
+            <div class="form-group">
+               <label for="price">Preço:</label>
+               <input type="number" id="price" name="price" value="{{produto.price}}" required>
+            </div>
+            <div class="form-group">
+               <label for="image">Imagem (URL):</label>
+               <input type="text" id="image" name="image" value="{{produto.image}}">
+            </div>
+            <div class="form-group">
+             <label for="quant">Quantidade:</label>
+              <input type="number" id="quant" name="quant" value="{{produto.quant}}" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Categoria:</label>
+                <input type="text" id="category" name="category" value="{{produto.category}}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn">Salvar Alterações</button>
+            </div>
         </div>
     </form>
 </div>

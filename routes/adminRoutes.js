@@ -3,8 +3,41 @@ const router = express.Router();
 const ProdutoController = require('../controllers/ProdutoController');
 const AdminController = require('../Controllers/AdminController');
 const { checkAuth, checkAdmin } = require('../helpers/auth');
+const path = require('path');
+const multer = require('multer');
 
 router.use(checkAdmin);
+
+// Configurar o local de armazenamento e o nome do arquivo
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/'); // Pasta onde as imagens serão salvas
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Nome único para cada arquivo
+    }
+});
+
+// Filtrar os arquivos por tipo
+const fileFilter = (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = fileTypes.test(file.mimetype);
+
+    if (extname && mimetype) {
+        cb(null, true);
+    } else {
+        cb(new Error('Somente imagens são permitidas!'));
+    }
+};
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
+
+// Processar a atualização (inclui o upload de imagem)
+router.post('/update', upload.single('profileImage'), AdminController.updateAdmin);
 
 router.get('/dashboard', ProdutoController.dashboard);
 router.get('/add', ProdutoController.createProduto);
