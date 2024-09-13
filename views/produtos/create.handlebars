@@ -2,7 +2,7 @@
     <a href="/produtos/admin/dashboard"> Voltar </a>
     <h1>Adicionar Produto:</h1>
 
-    <form action="/produtos/add" method="POST" id="produtoForm">
+    <form action="/produtos/add" method="POST" id="produtoForm" enctype="multipart/form-data">
         <div class="form-control">
             <label for="name">Nome do Produto:</label>
             <input type="text" name="name" placeholder="Digite o nome do produto" required>
@@ -20,8 +20,8 @@
             <input type="number" name="price" step="0.01" placeholder="Digite o preço" required>
         </div>
         <div class="form-control">
-            <label for="image">Imagem (URL):</label>
-            <input type="text" name="image" placeholder="Digite a URL da imagem">
+            <label for="image">Imagem:</label>
+            <input type="file" name="image" accept="image/*" required>
         </div>
         <div class="form-control">
             <label for="quant">Quantidade:</label>

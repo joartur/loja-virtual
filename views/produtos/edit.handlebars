@@ -18,16 +18,21 @@
                 <textarea id="description" name="description" required>{{produto.description}}</textarea>
             </div>
             <div class="form-group">
-               <label for="price">Preço:</label>
-               <input type="number" id="price" name="price" value="{{produto.price}}" required>
+                <label for="price">Preço:</label>
+                <input type="number" id="price" name="price" value="{{produto.price}}" required>
             </div>
             <div class="form-group">
-               <label for="image">Imagem (URL):</label>
-               <input type="text" id="image" name="image" value="{{produto.image}}">
+                <label for="image">Imagem (opcional):</label>
+                <input type="file" id="image" name="image" accept="image/*">
+                {{#if produto.image}}
+                <div>
+                    <img src="/uploads/produtos/{{produto.image}}" alt="Imagem Atual" style="max-width: 100px; height: auto;">
+                </div>
+                {{/if}}
             </div>
             <div class="form-group">
-             <label for="quant">Quantidade:</label>
-              <input type="number" id="quant" name="quant" value="{{produto.quant}}" required>
+                <label for="quant">Quantidade:</label>
+                <input type="number" id="quant" name="quant" value="{{produto.quant}}" required>
             </div>
             <div class="form-group">
                 <label for="category">Categoria:</label>

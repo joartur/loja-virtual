@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 
@@ -166,34 +168,34 @@ class AuthController {
         try {
             const userId = req.session.userid;
             const { name, email, password, confirmpassword } = req.body;
-
+    
             const user = await User.findByPk(userId);
-
+    
             if (!user) {
                 req.flash('message', 'Usuário não encontrado!');
                 return res.redirect('/');
             }
-
+    
             if (password !== confirmpassword) {
                 req.flash('message', 'As senhas não conferem!');
                 return res.redirect(`/produtos/cliente_update`);
             }
-
+    
             user.name = name;
             user.email = email;
-
+    
             if (password) {
                 const salt = bcrypt.genSaltSync(10);
                 user.password = bcrypt.hashSync(password, salt);
             }
-
+    
             // Atualiza a imagem de perfil se houver
             if (req.file) {
-                user.profileImage = `/uploads/${req.file.filename}`;
+                user.profileImage = `uploads/cliente/${req.file.filename}`; // Caminho relativo ao diretório público
             }
-
+    
             await user.save();
-
+    
             req.flash('message', 'Dados atualizados com sucesso!');
             res.redirect('/produtos/cliente_update');
         } catch (error) {

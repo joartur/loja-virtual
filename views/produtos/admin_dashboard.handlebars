@@ -1,102 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrador</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .products-grid li {
-            padding: 16px;
-            border-radius: 8px;
-        }
-
-        .products-grid h3 {
-            margin: 10px 0;
-        }
-
-        .products-grid span {
-            margin-top: 0;
-            font-size: 14px;
-        }
-
-        .products-grid p {
-            margin: 8px 0;
-        }
-
-        .products-grid img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-        .btn-edit {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            width: 120px;
-        }
-
-        .btn-edit:hover {
-            background-color: #0056b3;
-        }  
-        .btn-delete {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            width: 150px;
-        }
-
-        .btn-delete:hover {
-            background-color: #b30000;
-        }
-        #confirmacaoMsg {
-            background-color: #f8d7da;
-            padding: 10px;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-        }
-
-        .btn-confirm {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            margin-right: 5px;
-            width: 100%;
-        }
-
-        .btn-cancel {
-            background-color: #6c757d;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }                
-    </style>
-</head>
-<body>
     <main>
         {{#if emptyProdutos}}
             <p>Nenhum produto foi adicionado ainda. <a href="/produtos/add">Clique aqui</a> para adicionar</p>
@@ -104,11 +5,11 @@
             <ul class="products-grid">
                 {{#each produtos}}
                     <li>
-                        {{#if this.image}}
-                            <img src="{{this.image}}" alt="{{this.name}}">
+                        {{#if image}}
+                            <img src="/{{image}}" alt="{{name}}" style="max-width: 100px; height: auto;">
                         {{else}}
                             <p>Imagem não disponível</p>
-                        {{/if}}       
+                        {{/if}}  
                         <span>{{truncate this.name 50}}</span>
                         <h3>R$ {{this.price}}</h3>                           
                         <!-- Botão de Editar -->
@@ -128,7 +29,6 @@
             </ul>
         {{/if}}
     </main>
-</body>
 <script>
 function confirmarExclusao(button) {
     // Fecha todas as mensagens de confirmação abertas
@@ -162,4 +62,3 @@ function cancelarExclusao(button) {
     form.querySelector('.btn-delete').style.display = 'inline-block';
 }
 </script>
-</html>

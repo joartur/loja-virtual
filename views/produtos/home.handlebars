@@ -1,98 +1,58 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .products-grid li {
-            padding: 16px;
-            border-radius: 8px;
-        }
-
-        .products-grid li a{
-            text-decoration: none;
-        }
-
-        .products-grid h3 {
-            margin: 10px 0;
-        }
-
-        .products-grid span {
-            margin-top: 0;
-            font-size: 14px;
-        }
-
-        .products-grid p {
-            margin: 8px 0;
-        }
-
-        .products-grid img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-    </style>
-</head>
-<body>
-    <main>
-    {{#if search}}
-    <h1>Você está buscando por: <span>{{search}}</span></h1>
-        {{#if produtosQty}}
-            <p>Encontramos <span>{{produtosQty}}</span> produto(s)</p>
-        {{else}}
-            <p>Nenhum produto foi encontrado</p>
-        {{/if}}
+<main>
+{{#if search}}
+<h1>Você está buscando por: <span>{{search}}</span></h1>
+    {{#if produtosQty}}
+        <p>Encontramos <span>{{produtosQty}}</span> produto(s)</p>
     {{else}}
-    <h1>Todos os produtos</h1>
-    {{/if}}       
+        <p>Nenhum produto foi encontrado</p>
+    {{/if}}
+{{else}}
+<h1>Todos os produtos</h1>
+{{/if}}
 
+<!-- Exibir categorias -->
+<div class="categories">
+    <h2>Categorias</h2>
+    <ul>
+        {{#each categorias}}
+            <li><a href="/produtos/categoria/{{this}}">{{this}}</a></li>
+        {{/each}}
+    </ul>
+</div>
 
-        {{#if emptyProdutos}}
-            <p>Nenhum produto encontrado.</p>
-        {{else}}
-            <div class="card-container">
-                {{#each produtos}}
-                   <div class="card">
-                        <a href="/produtos/produto/{{this.id}}">                        
-                        {{#if this.image}}
-                            <img src="{{this.image}}" alt="{{this.name}}">
-                        {{else}}
-                            <p>Imagem não disponível</p>
-                        {{/if}}
-                        <div class="card-content">
-                        <span class="card-title">{{truncate this.name 50}}</span>
-                        <p class="card-price">R$ {{this.price}}</p>
-                        </div>
-                        </a>
-                    </div>
-                    </li>
-                {{/each}}
+{{#if emptyProdutos}}
+    <p>Nenhum produto encontrado.</p>
+{{else}}
+    <div class="card-container">
+        {{#each produtos}}
+            <div class="card">
+                <a href="/produtos/produto/{{this.id}}">
+                {{#if this.image}}
+                    <img src="/uploads/produtos/{{this.image}}" alt="{{this.name}}">
+                {{else}}
+                    <p>Imagem não disponível</p>
+                {{/if}}
+                <div class="card-content">
+                <span class="card-title">{{truncate this.name 50}}</span>
+                <p class="card-price">{{this.priceFormatted}}</p>
+                </div>
+                </a>
             </div>
-            </ul>
-        {{/if}}
-        <div class="pagination">
-            {{#if (gt currentPage 1)}}
-                <a href="?page={{subtract currentPage 1}}&search={{search}}&order={{order}}">Anterior</a>
-            {{/if}}
+        {{/each}}
+    </div>
+{{/if}}
 
-            {{#each (range 1 totalPages)}}
-                <a href="?page={{this}}&search={{../search}}&order={{../order}}" class="{{#if (eq ../currentPage this)}}active{{/if}}">{{this}}</a>
-            {{/each}}
+<div class="pagination">
+    {{#if (gt currentPage 1)}}
+        <a href="?page={{subtract currentPage 1}}&search={{search}}&order={{order}}">Anterior</a>
+    {{/if}}
 
-            {{#if (lt currentPage totalPages)}}
-                <a href="?page={{add currentPage 1}}&search={{search}}&order={{order}}">Próxima</a>
-            {{/if}}
-        </div>
-    </main>
-</body>
-</html>
+    {{#each (range 1 totalPages)}}
+        <a href="?page={{this}}&search={{../search}}&order={{../order}}" class="{{#if (eq ../currentPage this)}}active{{/if}}">{{this}}</a>
+    {{/each}}
+
+    {{#if (lt currentPage totalPages)}}
+        <a href="?page={{add currentPage 1}}&search={{search}}&order={{order}}">Próxima</a>
+    {{/if}}
+</div>
+</main>

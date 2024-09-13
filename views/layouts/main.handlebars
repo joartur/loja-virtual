@@ -8,6 +8,38 @@
     <title>Lojas AME</title>
 </head>
 <body>
+{{#if session.userid}}
+    {{#if (eq session.userRole 'admin')}}
+
+        {{else}}
+            <div class="topo">
+                <p>
+                    <a href="/">
+                        <span>aniversário americanas </span>
+                        <i class="bi bi-dot"></i>
+                        <span class="offer-text">as melhores ofertas para você</span>
+                        <strong>com até 50% de desconto</strong>
+                        <i class="bi bi-dot"></i>
+                        <span> queeero <i class="bi bi-chevron-right"></i></span>
+                    </a>
+                </p>
+            </div>    
+        {{/if}}
+{{else}}
+    <div class="topo">
+        <p>
+            <a href="/">
+                <span>aniversário americanas </span>
+                <i class="bi bi-dot"></i>
+                <span class="offer-text">as melhores ofertas para você</span>
+                <strong>com até 50% de desconto</strong>
+                <i class="bi bi-dot"></i>
+                <span> queeero <i class="bi bi-chevron-right"></i></span>
+            </a>
+        </p>
+    </div>  
+{{/if}}
+  <div class="background">
     <nav id="navbar">
         <a href="/" id="logo">
             <a href="/"><img src="/img/img.png" alt="Lojas Ame"></a>
@@ -121,21 +153,21 @@
 </main>
 <div class="menu">
     <ul>
-        <li class="dept"><i class="bi bi-list"></i>Todos os departamentos<i class="bi bi-chevron-down"></i></li>
+        <li class="dept"><i class="bi bi-list"></i><strong>Todos os departamentos</strong><i class="bi bi-chevron-down"></i></li>
     </ul>
     <ul>
-        <li><a href="/">baixe o app</a></li>
-        <li><a href="/">para sua empresa</a></li>
-        <li><a href="/">entrega rápida</a></li>
-        <li><a href="/">serviços</a></li>
-        <li><a href="/">nossas lojas</a></li>
-        <li><a href="/">oba, cupom</a></li>
-        <li><a href="/">lojas oficiais</a></li>
-        <li><a href="/">produtos internacionais</a></li>
-        <li><a href="/">oferta do dia</a></li>
+        <li><a href="/">mercado</a></li>
+        <li><a href="/">celulares</a></li>
+        <li><a href="/">eletrodomésticos</a></li>
+        <li><a href="/">informática</a></li>
+        <li><a href="/">tv e home theater</a></li>
+        <li><a href="/">eletropotáteis</a></li>
+        <li><a href="/">móveis</a></li>
+        <li><a href="/"><strong>aniversário americanas</strong></a></li>
     </ul>
 </div>
-
+</div>
+<div class="wrapper">
 <div class="container">
     <div class="sidebar">
         {{#if session.userid}}
@@ -144,7 +176,7 @@
                 <div class="admin-info">
                     {{#if admin.profileImage}}
                     <div class="form-control">
-                        <img src="/uploads/{{admin.profileImage}}" alt="Imagem de perfil" width="100">
+                        <img src="/uploads/adm/{{admin.profileImage}}" alt="Imagem de perfil" width="100">                       
                     </div>
                     {{/if}}                    
                     <p><strong>Nome:</strong> {{admin.name}}</p>
@@ -257,6 +289,7 @@
         {{{body}}}
     </div>
 </div>
+</div>
 
 <footer>
     <p>
@@ -265,5 +298,4 @@
     </p>
 </footer>
 </body>
-
 </html>

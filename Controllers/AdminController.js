@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const path = require('path');
+const fs = require('fs');
 
 class AdminController {
     static async layout(req, res, next) {
@@ -134,37 +136,40 @@ class AdminController {
     static async updateAdmin(req, res) {
         const { name, email, password, role } = req.body;
         const adminId = req.session.userid;
-
+    
         try {
             const admin = await User.findByPk(adminId);
-
+    
             if (!admin) {
                 req.flash('message', 'Administrador não encontrado.');
                 return res.redirect('/produtos/admin/dashboard');
             }
-
+    
             // Atualizando os dados
             admin.name = name;
             admin.email = email;
             admin.role = role;
-
+    
             // Atualizar a senha se for fornecida
             if (password) {
                 const salt = bcrypt.genSaltSync(10);
                 admin.password = bcrypt.hashSync(password, salt);
             }
-
-            // Se uma nova imagem de perfil for fornecida
+    
+            // Verificar se uma nova imagem de perfil foi fornecida
             if (req.file) {
                 // Remover a imagem antiga, se existir
                 if (admin.profileImage) {
-                    const oldImagePath = path.join(__dirname, '../public/uploads/', admin.profileImage);
-                    fs.unlinkSync(oldImagePath); // Apaga a imagem antiga
+                    const oldImagePath = path.join(__dirname, '../public/uploads/adm/', admin.profileImage);
+                    if (fs.existsSync(oldImagePath)) {
+                        fs.unlinkSync(oldImagePath); // Apaga a imagem antiga
+                    }
                 }
-
+    
                 admin.profileImage = req.file.filename; // Salva o novo nome da imagem
             }
-
+    
+            // Salvar as alterações
             await admin.save();
             req.flash('message', 'Dados do administrador atualizados com sucesso.');
             res.redirect('/admin/update');

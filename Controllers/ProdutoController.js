@@ -1,6 +1,20 @@
 const Produto = require('../models/Produto');
 const User = require('../models/User');
 const { Op } = require('sequelize');
+const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
+
+// Configurar multer para upload de arquivos
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/produtos/'); // Pasta onde as imagens serão salvas
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
 
 class ProdutoController {
 
@@ -60,6 +74,7 @@ class ProdutoController {
         const limit = 12; 
         const page = parseInt(req.query.page) || 1; 
     
+        // Buscar produtos e contar resultados
         const { count, rows: produtosData } = await Produto.findAndCountAll({
             include: User,
             where: {
@@ -70,10 +85,22 @@ class ProdutoController {
             offset: (page - 1) * limit,
         });
     
+        // Mapear produtos e transformar em objeto plano
         const produtos = produtosData.map((resultado) => resultado.get({ plain: true }));
-    
         let produtosQty = produtos.length;
         const totalPages = Math.ceil(count / limit);
+
+        // Buscar produtos por categoria
+        const produtosPorCategoria = await Produto.findAll({
+            attributes: ['category'],
+            group: ['category']
+        });
+        
+        // Organizar produtos em categorias
+        let categoriasProdutos = {};
+        produtosPorCategoria.forEach(produto => {
+            categoriasProdutos[produto.category] = produtos.filter(p => p.category === produto.category);
+        });
     
         res.render('produtos/home', {
             produtos,
@@ -82,6 +109,7 @@ class ProdutoController {
             totalPages,
             currentPage: page,
             order,
+            categoriasProdutos, // Passar as categorias para a view
         });
     }
 
@@ -238,11 +266,11 @@ class ProdutoController {
     static createProduto(req, res) {
         res.render('produtos/create');
     }
-
+    
     static async createProdutoSave(req, res) {
-        const { name, marca, description, price, image, quant, category } = req.body;
+        const { name, marca, description, price, quant, category } = req.body;
+        const image = req.file ? `uploads/produtos/${req.file.filename}` : null;
 
-        // Crie um novo produto com os dados recebidos do formulário
         try {
             await Produto.create({
                 name,
@@ -311,21 +339,21 @@ class ProdutoController {
     }
 
     static async updateProdutoSave(req, res) {
-        const id = req.body.id; // Obtenha o ID do corpo da requisição
-        console.log('ID recebido:', id);
+        const id = req.body.id;
         const produtoAtualizado = {
             name: req.body.name,
             marca: req.body.marca,
             description: req.body.description,
             price: req.body.price,
-            image: req.body.image,
             quant: req.body.quant,
             category: req.body.category
         };
-    
-        console.log('ID:', id);
-        console.log('Dados do Produto Atualizado:', produtoAtualizado);
-    
+
+        // Atualizar imagem se um novo arquivo foi enviado
+        if (req.file) {
+            produtoAtualizado.image = `uploads/produtos/${req.file.filename}`;
+        }
+
         try {
             await Produto.update(produtoAtualizado, { where: { id: id } });
             req.flash('message', 'Produto atualizado com sucesso!');

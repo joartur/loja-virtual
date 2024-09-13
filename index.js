@@ -26,7 +26,7 @@ app.set('view engine', 'handlebars');
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 app.use(session({
     name: "session",
