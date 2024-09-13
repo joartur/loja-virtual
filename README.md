@@ -11,3 +11,7 @@
 <p>
   <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="100%" alt="Exemplo">
 </p>
+
+<P>
+  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo-mobile.png" width="100%" alt="Exemplo mobile">
+</P>
