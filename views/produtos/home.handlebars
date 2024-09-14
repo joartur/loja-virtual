@@ -7,18 +7,7 @@
         <p>Nenhum produto foi encontrado</p>
     {{/if}}
 {{else}}
-<h1>Todos os produtos</h1>
 {{/if}}
-
-<!-- Exibir categorias -->
-<div class="categories">
-    <h2>Categorias</h2>
-    <ul>
-        {{#each categorias}}
-            <li><a href="/produtos/categoria/{{this}}">{{this}}</a></li>
-        {{/each}}
-    </ul>
-</div>
 
 {{#if emptyProdutos}}
     <p>Nenhum produto encontrado.</p>
@@ -27,15 +16,24 @@
         {{#each produtos}}
             <div class="card">
                 <a href="/produtos/produto/{{this.id}}">
-                {{#if this.image}}
-                    <img src="/uploads/produtos/{{this.image}}" alt="{{this.name}}">
-                {{else}}
-                    <p>Imagem não disponível</p>
-                {{/if}}
-                <div class="card-content">
-                <span class="card-title">{{truncate this.name 50}}</span>
-                <p class="card-price">{{this.priceFormatted}}</p>
-                </div>
+                    {{#if this.image}}
+                        <img src="/{{image}}" alt="{{name}}">
+                    {{else}}
+                        <p>Imagem não disponível</p>
+                    {{/if}}
+                    <div class="card-content">
+                        <span class="card-title">{{truncate this.name 50}}</span>
+                        <p class="card-price">{{this.priceFormatted}}</p>
+                        {{#if this.quant}}
+                            <p><strong>Quantidade:</strong> {{this.quant}}</p>
+                            <form action="/carrinho/add/{{this.id}}" method="POST">
+                                <button type="submit" class="btn-add">Adicionar ao Carrinho</button>
+                            </form>
+                        {{else}}
+                            <p style="color: red; font-weight: bold;">PRODUTO INDISPONÍVEL</p>
+                            <button class="btn-off" disabled>Indisponível</button>
+                        {{/if}}
+                    </div>
                 </a>
             </div>
         {{/each}}

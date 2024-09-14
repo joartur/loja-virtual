@@ -8,7 +8,7 @@ const fs = require('fs');
 // Configurar multer para upload de arquivos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/uploads/produtos/'); // Pasta onde as imagens serão salvas
+        cb(null, 'public/uploads/produtos/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -109,7 +109,7 @@ class ProdutoController {
             totalPages,
             currentPage: page,
             order,
-            categoriasProdutos, // Passar as categorias para a view
+            categoriasProdutos
         });
     }
 
@@ -181,7 +181,7 @@ class ProdutoController {
     static async detalhesProduto(req, res) {
         const produtoId = req.params.id;
         console.log(`ID do Produto recebido: ${produtoId}`);
-    
+        
         try {
             const produto = await Produto.findByPk(produtoId);
             if (!produto) {
@@ -190,21 +190,18 @@ class ProdutoController {
                 return res.redirect('/produtos');
             }
     
-            // Verificar se todos os dados do produto estão corretos
-            console.log(produto);
-    
             const produtoDetalhes = {
                 id: produto.id,
                 name: produto.name,
                 marca: produto.marca,
                 description: produto.description,
                 price: produto.price,
-                image: produto.image,
+                image: produto.image, // Certifique-se de que esta propriedade contém apenas o nome do arquivo
                 quant: produto.quant,
                 category: produto.category
-              };
-              
-              res.render('produtos/produto_detalhes', { produto: produtoDetalhes });
+            };
+            
+            res.render('produtos/produto_detalhes', { produto: produtoDetalhes });
         } catch (err) {
             console.error(err);
             req.flash('message', 'Erro ao buscar o produto.');

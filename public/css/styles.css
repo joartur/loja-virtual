@@ -8,7 +8,7 @@
 }
 
 .background{
-		background: linear-gradient(to bottom, #F20544 76%, #FFFFFF 76%);
+		background: linear-gradient(to bottom, #F20544 75.5%, #FFFFFF 75.5%);
 }
 
 #logo img {
@@ -679,6 +679,38 @@ footer p{
     right: -8px;
 }
 
+.btn-add {
+	display: inline-block;
+	padding: 6px 10px;
+	background-color: #009611;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	width: 100%;
+}
+
+.btn-add:hover {
+	background-color: #09b300;
+}  
+.btn-off {
+	display: inline-block;
+	padding: 6px 10px;
+	background-color: #ff0000;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btn-off:hover {
+	background-color: #b30000;
+}
+
 .icon-container {
     position: relative;
     display: inline-block;
@@ -697,7 +729,7 @@ footer p{
 	border-radius: 12px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
-	max-width: 200px;
+	max-width: 230px;
 	display: flex;
 	flex-direction: column;
 	transition: transform 0.2s ease;
@@ -708,9 +740,13 @@ footer p{
 }
 
 .card img {
-	width: 100%;
-	height: 150px;
+	width: auto;
+	height: 200px;
 	object-fit: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
 }
 
 .card a{
@@ -897,97 +933,135 @@ main p {
 /* DASHBOARD PRODUTOS */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
     list-style: none;
     padding: 0;
-    background-color: #F1F1F1; 
+    background-color: #F5F5F5; 
     overflow-x: auto; 
     width: 100%;
     min-height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .products-grid li {
-    padding: 16px;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 12px;
     background-color: #FFFFFF;
-    min-width: 200px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
+
+.products-grid li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 .products-grid h3 {
-	margin: 10px 0;
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
 }
 
 .products-grid span {
-	margin-top: 0;
-	font-size: 14px;
+    margin-top: 0;
+    font-size: 14px;
+    color: #888;
 }
 
 .products-grid p {
-	margin: 8px 0;
+    margin: 8px 0;
+    color: #555;
 }
 
 .products-grid img {
-	width: 100%;
-	height: 150px;
-	object-fit: cover;
+    width: 100%;
+    max-width: 180px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
+
+/* Botões de ação */
+.btn-edit, .btn-delete {
+    display: inline-block;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
 .btn-edit {
-	display: inline-block;
-	padding: 10px 15px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	width: 120px;
+    background-color: #007bff;
+    color: white;
+    width: auto;
 }
 
 .btn-edit:hover {
-	background-color: #0056b3;
-}  
+    background-color: #0056b3;
+}
+
 .btn-delete {
-	display: inline-block;
-	padding: 10px 15px;
-	background-color: #ff0000;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	width: 150px;
+    background-color: #ff4d4d;
+    color: white;
+    width: auto;
 }
 
 .btn-delete:hover {
-	background-color: #b30000;
+    background-color: #cc0000;
 }
+
+/* Confirmação de exclusão */
 #confirmacaoMsg {
-	background-color: #f8d7da;
-	padding: 10px;
-	border: 1px solid #f5c6cb;
-	border-radius: 5px;
+    background-color: #f8d7da;
+    padding: 12px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    color: #721c24;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Botões de confirmação e cancelamento */
+.btn-confirm, .btn-cancel {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+    transition: background-color 0.3s;
 }
 
 .btn-confirm {
-	background-color: #dc3545;
-	color: white;
-	padding: 5px 10px;
-	border: none;
-	cursor: pointer;
-	margin-right: 5px;
-	width: 100%;
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #c82333;
 }
 
 .btn-cancel {
-	background-color: #6c757d;
-	color: white;
-	padding: 5px 10px;
-	border: none;
-	cursor: pointer;
-	width: 100%;
-}  
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 768px) {
