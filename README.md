@@ -1,6 +1,7 @@
-Claro! Aqui está um exemplo profissional e bem estruturado de um arquivo `README.md` para o seu projeto de Loja Virtual, seguindo boas práticas do GitHub:
-
 ---
+<p>
+  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="80%" alt="Exemplo">
+</p>
 
 ````markdown
 # 🛒 Loja Virtual
@@ -75,14 +76,18 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento:
 ```
 loja-virtual/
 ├── controllers/
+├── db/
 ├── models/
+├── helpers/
+├── sessions/
 ├── views/
 ├── routes/
 ├── public/
-├── config/
 ├── .env
 ├── app.js
 └── README.md
+.createAdmin.js
+.index.js
 ```
 
 ## 🔐 Áreas do Sistema
@@ -112,21 +117,10 @@ Pull requests são bem-vindos. Para mudanças significativas, por favor, abra um
 Este projeto está licenciado sob a Licença MIT.
 
 ---
-
-Desenvolvido com 💻 por \[Seu Nome ou Equipe].
-
-```
-
----
-
-Você gostaria que eu gerasse esse arquivo como um `.md` para download ou deseja inseri-lo diretamente em seu repositório?
-```
-
-
-<p>
-  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="80%" alt="Exemplo">
-</p>
-
 <P>
   <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo-mobile.png" width="20%" alt="Exemplo mobile">
 </P>
+
+```
+
+
