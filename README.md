@@ -1,5 +1,5 @@
-<p>
-  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="80%" alt="Exemplo" align="center">
+<p align="center">
+  <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="80%" alt="Exemplo">
 </p>
 
 ---
