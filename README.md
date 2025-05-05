@@ -1,7 +1,8 @@
----
 <p>
   <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo.png" width="80%" alt="Exemplo">
 </p>
+
+---
 
 ````markdown
 # 🛒 Loja Virtual
