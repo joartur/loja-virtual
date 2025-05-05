@@ -115,11 +115,10 @@ Pull requests são bem-vindos. Para mudanças significativas, por favor, abra um
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT.
-
----
 <P>
   <img src="https://github.com/joartur/loja-virtual/blob/main/public/img/exemplo-mobile.png" width="20%" alt="Exemplo mobile">
 </P>
+---
 
 ```
 
